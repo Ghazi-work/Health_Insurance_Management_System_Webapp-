@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\Health_Insuarance_Management_System_webapp.props" />
+</Project>
