@@ -1,0 +1,121 @@
+﻿@using Health_Insuarance_Management_System_webapp.Enums;
+@model Health_Insuarance_Management_System_webapp.ViewModels.AccountRegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h1>Register User</h1>
+
+<form method="post" asp-action="Register" enctype="multipart/form-data">
+    <div class="border p-3 mt-4 row">
+         <div class="row pb-2">
+            <h2 class="text-primary">Register User</h2>
+            <hr />
+        </div>
+        <div class="mb-3 ">
+            <label asp-for="Photo"></label>
+            <input id="inpBox" type="file" name="file" class="form-control" />
+        </div>
+       
+        <div class="mb-3 col-6">
+            <label asp-for="FirstName"></label>
+            <input asp-for="FirstName" class="form-control" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+          <div class="mb-3 col-6">
+            <label asp-for="LastName"></label>
+            <input asp-for="LastName" class="form-control" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+       
+        <div class="mb-3 col-6">
+            <label asp-for="Age"></label>
+            <input asp-for="Age" class="form-control" />
+            <span asp-validation-for="Age" class="text-danger"></span>
+        </div>
+        <div class="mb-3 col-6">
+            <label asp-for="Gender" class="control-label"></label>
+             <select asp-for="Gender" asp-items="Html.GetEnumSelectList<GenderEnum>()" class="form-control"></select>
+            <span asp-validation-for="Gender" class="text-danger"></span>
+        </div>
+        <div class="mb-3 col-6">
+            <label asp-for="DateOfBirth"></label>
+            <input asp-for="DateOfBirth" class="form-control" />
+            <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+        </div>
+        <div class="mb-3 col-6">
+            <label asp-for="MaritalStatus" class="control-label"></label>
+            <select asp-for="MaritalStatus" asp-items="Html.GetEnumSelectList<MaritalStatusEnum>()" class="form-control"></select>
+            <span asp-validation-for="MaritalStatus" class="text-danger"></span>
+        </div>
+        <div class="mb-3 col-6">
+            <label asp-for="CNIC"></label>
+            <input asp-for="CNIC" class="form-control" />
+            <span asp-validation-for="CNIC" class="text-danger"></span>
+        </div>
+        <div class="mb-3 col-6">
+            <label asp-for="Education" class="control-label"></label>
+            <select asp-for="Education" asp-items="Html.GetEnumSelectList<EducationEnum>()" class="form-control"></select>
+            <span asp-validation-for="Education" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="TemporaryAddress"></label>
+            <textarea asp-for="TemporaryAddress" class="form-control" rows="3"> </textarea>
+            <span asp-validation-for="TemporaryAddress" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="PermenantAddress"></label>
+            <textarea asp-for="PermenantAddress" class="form-control" rows="3"> </textarea>
+            <span asp-validation-for="PermenantAddress" class="text-danger"></span>
+        </div>
+        <div class="mb-3 col-6">
+            <label asp-for="PersonalPhoneNumber"></label>
+            <input asp-for="PersonalPhoneNumber" class="form-control" />
+            <span asp-validation-for="PersonalPhoneNumber" class="text-danger"></span>
+        </div>
+        <div class="mb-3 col-6">
+            <label asp-for="HomePhoneNumber"></label>
+            <input asp-for="HomePhoneNumber" class="form-control" />
+            <span asp-validation-for="HomePhoneNumber" class="text-danger"></span>
+        </div>
+        <div class="mb-3 col-6">
+            <label asp-for="EmergencyPhoneNumber"></label>
+            <input asp-for="EmergencyPhoneNumber" class="form-control" />
+            <span asp-validation-for="EmergencyPhoneNumber" class="text-danger"></span>
+        </div>
+       @* <h1>Health Information</h1>*@
+        <div class="mb-3 col-6">
+            <label asp-for="EmergencyPhoneNumber"></label>
+            <input asp-for="EmergencyPhoneNumber" class="form-control" />
+            <span asp-validation-for="EmergencyPhoneNumber" class="text-danger"></span>
+        </div>
+       
+       @* <div class="mb-3 col-6">
+            <label asp-for="Product.CategoryId"></label>
+            <select asp-for="Product.CategoryId" asp-items="@Model.CategoryList" class="form-select">
+                <option disabled selected>--Select Category--</option>
+            </select>
+            <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
+        </div>
+        <div class="mb-3 col-6">
+            <label asp-for="Product.CoverTypeId"></label>
+            <select asp-for="Product.CoverTypeId" asp-items="@Model.CoverTypeList" class="form-select">
+                <option disabled selected>--Select Cover Type--</option>
+            </select>
+            <span asp-validation-for="Product.CoverTypeId" class="text-danger"></span>
+        </div>
+        <div class="col-6">
+            @if (Model.Product.Id != 0)
+            {
+                <button type="submit" class="btn btn-primary" style="width:150px">Update</button>
+
+            }
+            else
+            {
+                <button type="submit" onclick="return ValidateInput()" class="btn btn-primary" style="width:150px">Create</button>
+
+            }
+            <a asp-controller="Product" asp-action="Index" class="btn btn-secondary">Back To List</a>
+        </div>*@
+    </div>
+</form>

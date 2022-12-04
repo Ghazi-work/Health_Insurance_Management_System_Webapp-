@@ -11,5 +11,11 @@ namespace Health_Insuarance_Management_System_webapp.DataAccess
         {
 
         }
+
+        public DbSet<PolicyModel> Policies { get; set; }
+        public DbSet<InsuranceCompanyModel>  Insurance_Companies{ get; set; }
+        public DbSet<DepartmentModel> Departments{ get; set; }
+
+
     }
 }

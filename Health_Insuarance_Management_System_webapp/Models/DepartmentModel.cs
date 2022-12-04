@@ -2,7 +2,7 @@
 
 namespace Health_Insuarance_Management_System_webapp.Models
 {
-    public class Departments
+    public class DepartmentModel
     {
         [Key]
         public int DeptId { get; set; }
