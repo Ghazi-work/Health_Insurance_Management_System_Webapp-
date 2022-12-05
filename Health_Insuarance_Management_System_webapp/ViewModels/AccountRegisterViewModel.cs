@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Health_Insuarance_Management_System_webapp.ViewModels
 {
@@ -21,11 +22,14 @@ namespace Health_Insuarance_Management_System_webapp.ViewModels
         public int Age { get; set; }
         [Required]
         public GenderEnum Gender { get; set; }
+        [Remote(action: "IsEmailInUse", controller: "Account")]
 
         [EmailAddress]
         public string Email { get; set; }
         [Required]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
+        [DataType(DataType.Password)]
         [Required]
         [Compare("Password")]
         public string ConfirmPassword { get; set; }
@@ -43,9 +47,9 @@ namespace Health_Insuarance_Management_System_webapp.ViewModels
         [Required]
         public MaritalStatusEnum MaritalStatus { get; set; }
         [Required]
-        [RegularExpression("^((\\+92)|(0092))-{0,1}\\d{3}-{0,1}\\d{7}$|^\\d{11}$|^\\d{4}-\\d{7}$",ErrorMessage ="Invalid Format")]
+       // [RegularExpression("^((\\+92)|(0092))-{0,1}\\d{3}-{0,1}\\d{7}$|^\\d{11}$|^\\d{4}-\\d{7}$",ErrorMessage ="Invalid Format")]
         public int PersonalPhoneNumber { get; set; }
-        [RegularExpression("^((\\+92)|(0092))-{0,1}\\d{3}-{0,1}\\d{7}$|^\\d{11}$|^\\d{4}-\\d{7}$", ErrorMessage = "Invalid Format")]
+       // [RegularExpression("^((\\+92)|(0092))-{0,1}\\d{3}-{0,1}\\d{7}$|^\\d{11}$|^\\d{4}-\\d{7}$", ErrorMessage = "Invalid Format")]
 
         public int HomePhoneNumber { get; set; }
         [Required]
@@ -64,9 +68,9 @@ namespace Health_Insuarance_Management_System_webapp.ViewModels
 
 
         //Admin Enteries
-        [Required]
+    
         public DateTime JoinDate { get; set; }
-        [Required]
+
         public int Salary { get; set; }
 
 

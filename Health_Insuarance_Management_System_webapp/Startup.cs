@@ -52,6 +52,7 @@ namespace Health_Insuarance_Management_System_webapp
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
