@@ -47,13 +47,13 @@ namespace Health_Insuarance_Management_System_webapp.ViewModels
         [Required]
         public MaritalStatusEnum MaritalStatus { get; set; }
         [Required]
-       // [RegularExpression("^((\\+92)|(0092))-{0,1}\\d{3}-{0,1}\\d{7}$|^\\d{11}$|^\\d{4}-\\d{7}$",ErrorMessage ="Invalid Format")]
-        public int PersonalPhoneNumber { get; set; }
-       // [RegularExpression("^((\\+92)|(0092))-{0,1}\\d{3}-{0,1}\\d{7}$|^\\d{11}$|^\\d{4}-\\d{7}$", ErrorMessage = "Invalid Format")]
+       [RegularExpression("^((\\+92)|(0092))-{0,1}\\d{3}-{0,1}\\d{7}$|^\\d{11}$|^\\d{4}-\\d{7}$",ErrorMessage ="Invalid Format")]
+        public string PersonalPhoneNumber { get; set; }
+        [RegularExpression("^((\\+92)|(0092))-{0,1}\\d{3}-{0,1}\\d{7}$|^\\d{11}$|^\\d{4}-\\d{7}$", ErrorMessage = "Invalid Format")]
 
-        public int HomePhoneNumber { get; set; }
+        public string HomePhoneNumber { get; set; }
         [Required]
-        public int EmergencyPhoneNumber { get; set; }
+        public string EmergencyPhoneNumber { get; set; }
 
         //Health Information of the employees
         public BloodGroupEnum BloodGroup { get; set; }

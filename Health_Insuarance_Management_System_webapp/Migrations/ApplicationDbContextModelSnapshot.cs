@@ -62,8 +62,8 @@ namespace Health_Insuarance_Management_System_webapp.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<int>("EmergencyPhoneNumber")
-                        .HasColumnType("int");
+                    b.Property<string>("EmergencyPhoneNumber")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
@@ -77,8 +77,8 @@ namespace Health_Insuarance_Management_System_webapp.Migrations
                     b.Property<int>("Height")
                         .HasColumnType("int");
 
-                    b.Property<int>("HomePhoneNumber")
-                        .HasColumnType("int");
+                    b.Property<string>("HomePhoneNumber")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("JoinDate")
                         .HasColumnType("datetime2");
@@ -112,8 +112,8 @@ namespace Health_Insuarance_Management_System_webapp.Migrations
                     b.Property<string>("PermenantAddress")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PersonalPhoneNumber")
-                        .HasColumnType("int");
+                    b.Property<string>("PersonalPhoneNumber")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
@@ -200,8 +200,8 @@ namespace Health_Insuarance_Management_System_webapp.Migrations
                     b.Property<string>("HeadOfficeAddress")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("HelplineNumber")
-                        .HasColumnType("int");
+                    b.Property<string>("HelplineNumber")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("InsuranceCompanyName")
                         .HasColumnType("nvarchar(max)");

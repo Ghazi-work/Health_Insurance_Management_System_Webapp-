@@ -1,0 +1,45 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@model IEnumerable<IdentityRole>
+@{
+    ViewBag.Title = "All Roles";
+}
+
+<h1>RoleList</h1>
+
+@{
+    if (Model.Any())
+    {
+        <table class="table table-bordered">
+            <tr>
+                <th>Role Id</th>
+
+                <th>Role Names</th>
+                <th>Edit</th>
+                <th>Delete</th>
+
+
+            </tr>
+
+
+            @{
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+
+                        <td>@item.Name</td>
+                        <td><a asp-action="EditRole" asp-route-id="@item.Id" class="btn btn-success">Edit</a></td>
+                        <td><a asp-action="DeleteRole" class="btn btn-danger">Delete</a></td>
+
+                    </tr>
+                }
+            }
+        </table>
+
+    }
+    else
+    {
+        <h2>Sorry No roles available you can create new role by Clicking the button.</h2>
+        <a asp-action="CreateRole" asp-controller="Administration" class="btn btn-primary">Create Role</a>
+    }
+}

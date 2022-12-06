@@ -1,0 +1,56 @@
+﻿@model Health_Insuarance_Management_System_webapp.Models.InsuranceCompanyModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>InsuranceCompanyModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="CompanyId" />
+            <div class="form-group">
+                <label asp-for="InsuranceCompanyName" class="control-label"></label>
+                <input asp-for="InsuranceCompanyName" class="form-control" />
+                <span asp-validation-for="InsuranceCompanyName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HeadOfficeAddress" class="control-label"></label>
+                <input asp-for="HeadOfficeAddress" class="form-control" />
+                <span asp-validation-for="HeadOfficeAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HelplineNumber" class="control-label"></label>
+                <input asp-for="HelplineNumber" class="form-control" />
+                <span asp-validation-for="HelplineNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExtraInformation" class="control-label"></label>
+                <input asp-for="ExtraInformation" class="form-control" />
+                <span asp-validation-for="ExtraInformation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OfficialEmail" class="control-label"></label>
+                <input asp-for="OfficialEmail" class="form-control" />
+                <span asp-validation-for="OfficialEmail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WebsiteUrl" class="control-label"></label>
+                <input asp-for="WebsiteUrl" class="form-control" />
+                <span asp-validation-for="WebsiteUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

@@ -2,11 +2,16 @@
 using Health_Insuarance_Management_System_webapp.Models;
 using Health_Insuarance_Management_System_webapp.ViewModels;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Data.SqlClient.Server;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
+using System;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -37,14 +42,27 @@ namespace Health_Insuarance_Management_System_webapp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(AccountRegisterViewModel model)
+        public async Task<IActionResult> Register(AccountRegisterViewModel model, IFormFile? file)
         {
+            var folder = "";
+            if (file != null)
+            {
+                folder = @"images\employees";
+                folder += Guid.NewGuid().ToString() + "_" + file.FileName ;
+                var serverFolder = Path.Combine(webHost.WebRootPath, folder);
+               
+                file.CopyTo(new FileStream(serverFolder, FileMode.Create));
+
+
+
+            }
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser
                 {
                     UserName =  model.Email,
                     FirstName = model.FirstName,
+                    PhotoPath = folder,
                     LastName = model.LastName,
                     Email = model.Email,
                     Age = model.Age,
@@ -93,13 +111,13 @@ namespace Health_Insuarance_Management_System_webapp.Controllers
             return RedirectToAction("Index", "Home");
         }
         [HttpGet]
-        public IActionResult LogIn(string ReturnUrl)
+        public IActionResult LogIn()
         {
 
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> LogIn(LogInViewModel model)
+        public async Task<IActionResult> LogIn(LogInViewModel model, string returnUrl)
         {
             if (ModelState.IsValid)
             {
@@ -108,7 +126,15 @@ namespace Health_Insuarance_Management_System_webapp.Controllers
                     );
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Home");
+                    if (!string.IsNullOrEmpty(returnUrl))
+                    {
+                        return Redirect(returnUrl);
+                    }
+                    else
+                    {
+                       return RedirectToAction("Index", "Home");
+
+                    }
                 }
                 ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
 

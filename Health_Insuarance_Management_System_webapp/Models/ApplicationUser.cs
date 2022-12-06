@@ -20,9 +20,9 @@ namespace Health_Insuarance_Management_System_webapp.Models
         public string PermenantAddress { get; set; }
         public EducationEnum Education { get; set; }
         public MaritalStatusEnum MaritalStatus { get; set; }
-        public int PersonalPhoneNumber { get; set; }
-        public int HomePhoneNumber { get; set; }
-        public int EmergencyPhoneNumber { get; set; }
+        public string PersonalPhoneNumber { get; set; }
+        public string HomePhoneNumber { get; set; }
+        public string EmergencyPhoneNumber { get; set; }
 
         //Health Information of the employees
         public BloodGroupEnum BloodGroup { get; set; }

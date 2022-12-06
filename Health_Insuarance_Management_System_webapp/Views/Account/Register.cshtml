@@ -6,7 +6,7 @@
 
 <h1>Register User</h1>
 
-<form  asp-action="Register" enctype="multipart/form-data">
+<form  asp-action="Register" method="post" enctype="multipart/form-data">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="border p-3 mt-4 row">
          @*<div class="row pb-2">
@@ -33,7 +33,7 @@
         </div>
         <div class="mb-3 col-6 ">
             <label asp-for="Photo"></label>
-            <input id="inpBox" type="file" name="file" class="form-control" />
+            <input id="inpBox"  asp-for="Photo" name="file" class="form-control" />
         </div>
 
        
