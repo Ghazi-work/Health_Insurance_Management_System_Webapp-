@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Health_Insuarance_Management_System_webapp.ViewModels;
 
 namespace Health_Insuarance_Management_System_webapp.DataAccess
 {
@@ -15,6 +16,7 @@ namespace Health_Insuarance_Management_System_webapp.DataAccess
         public DbSet<PolicyModel> Policies { get; set; }
         public DbSet<InsuranceCompanyModel>  Insurance_Companies{ get; set; }
         public DbSet<DepartmentModel> Departments{ get; set; }
+        public DbSet<Health_Insuarance_Management_System_webapp.ViewModels.DeleteRoleViewModel> DeleteRoleViewModel { get; set; }
 
 
     }

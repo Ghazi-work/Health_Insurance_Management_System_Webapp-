@@ -1,0 +1,56 @@
+﻿@model Health_Insuarance_Management_System_webapp.ViewModels.EditRoleViewModel 
+@{
+    ViewData["Title"] = "EditRole";
+}
+
+<h1>EditRole</h1>
+
+
+<div class="row">
+    <div class="col-md-4">
+        <form  method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" disabled class="form-control" />
+               
+            </div>
+             <div class="form-group">
+                <label asp-for="RoleName" class="control-label"></label>
+                <input asp-for="RoleName" class="form-control" />
+                <span asp-validation-for="RoleName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Update Role" class="btn btn-primary" />
+                <a asp-action="RoleList" asp-controller="Administration" class="btn btn-info">Cancel</a>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3>User In this role</h3>
+                </div>
+                <div class="card-body">
+                    @if (Model.Users.Any())
+                    {
+                        foreach (var user in Model.Users)
+                        {
+                            <h5 class="card-title">@user</h5><hr />
+                        }
+                    }else
+                    {
+                       <h5 class="card-title">None at the Moment</h5>
+                         
+                    }
+                </div>
+                <div class="card-footer">
+                    <a asp-action="EditUsersInRole" class="btn btn-success" asp-route-roleId="@Model.Id" asp-controller="Administration">Add Or Remove Users</a>
+                </div>
+
+            </div>
+
+        </form>
+    </div>
+</div>
+
+

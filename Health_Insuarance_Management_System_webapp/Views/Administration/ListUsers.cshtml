@@ -1,0 +1,51 @@
+﻿@model IEnumerable<ApplicationUser>
+@{
+    ViewBag.Title = "All Roles";
+}
+
+<h1>User List</h1>
+
+@{
+    if (Model.Any())
+    {
+        <table class="table table-bordered">
+            <tr>
+                <th>User Id</th>
+                <th>User Name</th>
+                <th>Name</th>
+                <th>CNIC</th>
+                <th>Department</th>
+                <th>Gender</th>
+                <th>Edit</th>
+                <th>Delete</th>
+
+
+            </tr>
+
+
+            @{
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+
+                        <td>@item.UserName</td>
+                        <td>@item.FirstName @item.LastName</td>
+                        <td>@item.CNIC</td>
+                        <td>@item.departments</td>
+                        <td>@item.Gender</td>
+                        <td><a asp-action="EditRole" asp-route-id="@item.Id" class="btn btn-success">Edit</a></td>
+                        <td><a asp-action="DeleteRole" class="btn btn-danger">Delete</a></td>
+
+                    </tr>
+                }
+            }
+        </table>
+
+    }
+    else
+    {
+        <h2>Sorry No Users available you can create new users by Clicking the button.</h2>
+        <a asp-action="Register" asp-controller="Account" class="btn btn-primary">Create User</a>
+    }
+}

@@ -1,0 +1,41 @@
+﻿@using Health_Insuarance_Management_System_webapp.ViewModels;
+@model List<UserRoleViewModel>
+@{
+    ViewData["Title"] = "EditUsersInRole";
+}
+@{
+    var roleId = ViewBag.roleId;
+}
+
+<h1>EditUsersInRole</h1>
+
+<form method="post">
+    <div class="card">
+        <div class="card-header">
+            <h2>Add or Remove users from this Role</h2>
+        </div>
+        <div class="card-body">
+           @for (int i = 0; i < Model.Count(); i++)
+            {
+                <div class="form-check m-1">
+                    <input asp-for="@Model[i].UserId" type="hidden"  />
+                    <input asp-for="@Model[i].UserName" type="hidden" />
+
+                    <input asp-for="@Model[i].IsSelected" class="form-check-input"/>
+                    <label class="form-check-label" asp-for="@Model[i].IsSelected">
+                        @Model[i].UserName
+                    </label>
+                     <label class="form-check-label" asp-for="@Model[i].IsSelected">
+                        <b> &nbsp; @Model[i].UserRealName</b>
+                    </label>
+                </div>
+               
+            }
+
+        </div>
+        <div class="card-footer">
+            <input type="submit" value="Update" class="btn btn-primary" />
+            <a asp-action="EditRole" asp-route-id="@roleId" class="btn btn-secondary">Cancel</a>
+        </div>
+    </div>
+</form>

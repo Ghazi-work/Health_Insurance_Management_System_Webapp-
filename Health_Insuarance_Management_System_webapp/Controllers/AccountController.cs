@@ -1,6 +1,7 @@
 ﻿using Health_Insuarance_Management_System_webapp.DataAccess;
 using Health_Insuarance_Management_System_webapp.Models;
 using Health_Insuarance_Management_System_webapp.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -42,7 +43,7 @@ namespace Health_Insuarance_Management_System_webapp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(AccountRegisterViewModel model, IFormFile? file)
+        public async Task<IActionResult> Register(AccountRegisterViewModel model, IFormFile file)
         {
             var folder = "";
             if (file != null)
@@ -94,8 +95,13 @@ namespace Health_Insuarance_Management_System_webapp.Controllers
                 var result = await userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                    {
+                        return RedirectToAction("ListUsers", "Administration");
+                    }
                     await signInManager.SignInAsync(user, isPersistent: false);
                     return RedirectToAction("Index", "Home");
+
                 }
                 foreach (var error in result.Errors)
                 {
@@ -143,6 +149,9 @@ namespace Health_Insuarance_Management_System_webapp.Controllers
             return View(model);
         }
 
+
+      
+
         [HttpGet]
         [HttpPost]
         public async Task<IActionResult> IsEmailInUse(string email)
@@ -159,6 +168,14 @@ namespace Health_Insuarance_Management_System_webapp.Controllers
             }
 
 
+        }
+
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
     }
 }
