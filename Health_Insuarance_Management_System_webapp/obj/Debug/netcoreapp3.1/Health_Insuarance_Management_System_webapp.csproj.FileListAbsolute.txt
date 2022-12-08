@@ -450,3 +450,4 @@ D:\Health_Insurance\Health_Insuarance_Management_System_webapp\Health_Insuarance
 D:\Health_Insurance\Health_Insuarance_Management_System_webapp\Health_Insuarance_Management_System_webapp\obj\Debug\netcoreapp3.1\Razor\Views\Administration\EditUsersInRole.cshtml.g.cs
 D:\Health_Insurance\Health_Insuarance_Management_System_webapp\Health_Insuarance_Management_System_webapp\obj\Debug\netcoreapp3.1\Razor\Views\Account\AccessDenied.cshtml.g.cs
 D:\Health_Insurance\Health_Insuarance_Management_System_webapp\Health_Insuarance_Management_System_webapp\obj\Debug\netcoreapp3.1\Razor\Views\Administration\ListUsers.cshtml.g.cs
+D:\Health_Insurance\Health_Insuarance_Management_System_webapp\Health_Insuarance_Management_System_webapp\obj\Debug\netcoreapp3.1\Razor\Views\Administration\EditUser.cshtml.g.cs

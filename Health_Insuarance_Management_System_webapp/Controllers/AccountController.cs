@@ -48,7 +48,7 @@ namespace Health_Insuarance_Management_System_webapp.Controllers
             var folder = "";
             if (file != null)
             {
-                folder = @"images\employees";
+                folder = @"images\employees\";
                 folder += Guid.NewGuid().ToString() + "_" + file.FileName ;
                 var serverFolder = Path.Combine(webHost.WebRootPath, folder);
                

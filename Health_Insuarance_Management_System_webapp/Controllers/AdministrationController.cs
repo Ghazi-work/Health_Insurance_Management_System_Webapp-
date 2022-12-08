@@ -1,8 +1,10 @@
-﻿using Health_Insuarance_Management_System_webapp.Models;
+﻿using Health_Insuarance_Management_System_webapp.DataAccess;
+using Health_Insuarance_Management_System_webapp.Models;
 using Health_Insuarance_Management_System_webapp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,13 +17,16 @@ namespace Health_Insuarance_Management_System_webapp.Controllers
     {
         private readonly RoleManager<IdentityRole> roleManager;
 		private readonly UserManager<ApplicationUser> userManager;
+        private readonly ApplicationDbContext context;
 
-		public AdministrationController(RoleManager<IdentityRole> roleManager,
-                                         UserManager<ApplicationUser> userManager)
+        public AdministrationController(RoleManager<IdentityRole> roleManager,
+                                         UserManager<ApplicationUser> userManager,
+                                         ApplicationDbContext context)
         {
             this.roleManager = roleManager;
 			this.userManager = userManager;
-		}
+            this.context = context;
+        }
         [HttpGet]
         public IActionResult CreateRole()
         {
@@ -221,7 +226,87 @@ namespace Health_Insuarance_Management_System_webapp.Controllers
             var userList = userManager.Users;
             return View(userList);
         }
- 
+        [HttpGet]
+        public async Task<IActionResult> EditUser(string id)
+        {
+            ViewData["DepartmentId"] = new SelectList(context.Set<DepartmentModel>(), "DeptId", "DeptName");
+            ViewData["PolicyId"] = new SelectList(context.Set<PolicyModel>(), "PolicyId", "PolicyTitle");
+            var user = await userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return View("NotFound");
+            }
+            var userRoles = await userManager.GetRolesAsync(user);
+
+            var model = new EditUserViewModel
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Age = user.Age,
+                Gender = user.Gender,
+                DateOfBirth = user.DateOfBirth,
+                CNIC = user.CNIC,
+                TemporaryAddress = user.TemporaryAddress,
+                PermenantAddress = user.PermenantAddress,
+                Education = user.Education,
+                MaritalStatus = user.MaritalStatus,
+                PersonalPhoneNumber = user.PersonalPhoneNumber,
+                HomePhoneNumber = user.HomePhoneNumber,
+                EmergencyPhoneNumber = user.EmergencyPhoneNumber,
+                BloodGroup = user.BloodGroup,
+                Height = user.Height,
+                Weight = user.Weight,
+                DetailOfHealthDisease = user.DetailOfHealthDisease,
+                Medications = user.Medications,
+                StrenghtOfMedication = user.StrenghtOfMedication,
+                FrequencyTaken = user.FrequencyTaken,
+                JoinDate = user.JoinDate,
+                Salary = user.Salary,
+                DeptId  = user.DeptId,
+                PolicyId = user.PolicyId,
+                ClaimMoney = user.ClaimMoney,
+                Roles = userRoles
+                
+
+
+            };
+         
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditUser(EditUserViewModel model)
+        {
+        
+            var user = await userManager.FindByIdAsync(model.Id);
+            if (user == null)
+            {
+                return View("NotFound");
+            }
+            else
+            {
+                user.FirstName = model.FirstName;
+
+
+                var result = await userManager.UpdateAsync(user);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("ListUsers");
+                }
+           
+                foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(" ", error.Description);
+                    }
+
+                return View(model);
+               
+            }
+
+            
+        }
+
 
         //[HttpGet]
         //[HttpPost]

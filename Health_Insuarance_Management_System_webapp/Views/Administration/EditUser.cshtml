@@ -1,0 +1,175 @@
+﻿@using Health_Insuarance_Management_System_webapp.Enums;
+@model Health_Insuarance_Management_System_webapp.ViewModels.EditUserViewModel
+@{
+    ViewData["Title"] = "EditUser";
+}
+
+<h1>EditUser</h1>
+
+<form  method="post" asp-action="EditUser">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+  
+    <div class="border p-3 mt-4 row">
+       
+
+
+        <div class="mb-3 col-6">
+            <label asp-for="FirstName"></label>
+            <input asp-for="FirstName" class="form-control" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+        <div class="mb-3 col-6">
+            <label asp-for="LastName"></label>
+            <input asp-for="LastName" class="form-control" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3 col-6">
+            <label asp-for="Age"></label>
+            <input asp-for="Age" class="form-control" />
+            <span asp-validation-for="Age" class="text-danger"></span>
+        </div>
+        <div class="mb-3 col-6">
+            <label asp-for="Gender" class="control-label"></label>
+            <select asp-for="Gender" asp-items="Html.GetEnumSelectList<GenderEnum>()" class="form-control"></select>
+            <span asp-validation-for="Gender" class="text-danger"></span>
+        </div>
+        <div class="mb-3 col-6">
+            <label asp-for="DateOfBirth"></label>
+            <input asp-for="DateOfBirth" class="form-control" />
+            <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+        </div>
+        <div class="mb-3 col-6">
+            <label asp-for="MaritalStatus" class="control-label"></label>
+            <select asp-for="MaritalStatus" asp-items="Html.GetEnumSelectList<MaritalStatusEnum>()" class="form-control"></select>
+            <span asp-validation-for="MaritalStatus" class="text-danger"></span>
+        </div>
+        <div class="mb-3 col-6">
+            <label asp-for="CNIC"></label>
+            <input asp-for="CNIC" class="form-control" />
+            <span asp-validation-for="CNIC" class="text-danger"></span>
+        </div>
+        <div class="mb-3 col-6">
+            <label asp-for="Education" class="control-label"></label>
+            <select asp-for="Education" asp-items="Html.GetEnumSelectList<EducationEnum>()" class="form-control"></select>
+            <span asp-validation-for="Education" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="TemporaryAddress"></label>
+            <textarea asp-for="TemporaryAddress" class="form-control" rows="3"> </textarea>
+            <span asp-validation-for="TemporaryAddress" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="PermenantAddress"></label>
+            <textarea asp-for="PermenantAddress" class="form-control" rows="3"> </textarea>
+            <span asp-validation-for="PermenantAddress" class="text-danger"></span>
+        </div>
+        <div class="mb-3 col-6">
+            <label asp-for="PersonalPhoneNumber"></label>
+            <input asp-for="PersonalPhoneNumber" class="form-control" />
+            <span asp-validation-for="PersonalPhoneNumber" class="text-danger"></span>
+        </div>
+        <div class="mb-3 col-6">
+            <label asp-for="HomePhoneNumber"></label>
+            <input asp-for="HomePhoneNumber" class="form-control" />
+            <span asp-validation-for="HomePhoneNumber" class="text-danger"></span>
+        </div>
+        <div class="mb-3 col-6">
+            <label asp-for="EmergencyPhoneNumber"></label>
+            <input asp-for="EmergencyPhoneNumber" class="form-control" />
+            <span asp-validation-for="EmergencyPhoneNumber" class="text-danger"></span>
+        </div>
+        @* <h1>Health Information</h1>*@
+        <div class="mb-3 col-6">
+            <label asp-for="BloodGroup" class="control-label"></label>
+            <select asp-for="BloodGroup" asp-items="Html.GetEnumSelectList<BloodGroupEnum>()" class="form-control"></select>
+            <span asp-validation-for="BloodGroup" class="text-danger"></span>
+        </div>
+        <div class="mb-3 col-6">
+            <label asp-for="Height"></label>
+            <input asp-for="Height" class="form-control" />
+            <span asp-validation-for="Height" class="text-danger"></span>
+        </div>
+        <div class="mb-3 col-6">
+            <label asp-for="Weight"></label>
+            <input asp-for="Weight" class="form-control" />
+            <span asp-validation-for="Weight" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="DetailOfHealthDisease"></label>
+            <textarea asp-for="DetailOfHealthDisease" class="form-control" rows="3"> </textarea>
+            <span asp-validation-for="DetailOfHealthDisease" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Medications"></label>
+            <textarea asp-for="Medications" class="form-control" rows="3"> </textarea>
+            <span asp-validation-for="Medications" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="StrenghtOfMedication"></label>
+            <textarea asp-for="StrenghtOfMedication" class="form-control" rows="3"> </textarea>
+            <span asp-validation-for="StrenghtOfMedication" class="text-danger"></span>
+        </div>
+        <div class="mb-3 col-6">
+            <label asp-for="FrequencyTaken"></label>
+            <input asp-for="FrequencyTaken" placeholder="Eg. 1/day" class="form-control" />
+            <span asp-validation-for="FrequencyTaken" class="text-danger"></span>
+        </div>
+
+        @* Admin Entries*@
+        <div class="mb-3 col-6">
+            <label asp-for="JoinDate"></label>
+            <input asp-for="JoinDate" class="form-control" />
+            <span asp-validation-for="JoinDate" class="text-danger"></span>
+        </div>
+
+
+        <div class="mb-3 col-6">
+            <label asp-for="Salary"></label>
+            <input asp-for="Salary" class="form-control" />
+            <span asp-validation-for="Salary" class="text-danger"></span>
+        </div>
+
+
+        <div class="mb-3 col-6">
+            <label asp-for="DeptId" class="control-label"></label>
+            <select asp-for="DeptId" class="form-control" asp-items="ViewBag.DepartmentId"></select>
+        </div>
+        <div class="mb-3 col-6">
+            <label asp-for="PolicyId" class="control-label"></label>
+            <select asp-for="PolicyId" class="form-control" asp-items="ViewBag.PolicyId"></select>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Update" class="btn btn-primary" />
+            <a asp-action="ListUsers" asp-controller="Administration" class="btn btn-info">Cancel</a>
+        </div>
+    </div>
+
+
+    <div class="card">
+        <div class="card-header">
+            <h3>User role</h3>
+        </div>
+        <div class="card-body">
+            @if (Model.Roles.Any())
+            {
+                foreach (var role in Model.Roles)
+                {
+                    <h5 class="card-title">@role</h5>
+
+                    <hr />
+                }
+            }
+            else
+            {
+                <h5 class="card-title">None at the Moment</h5>
+
+            }
+        </div>
+        <div class="card-footer">
+            <a asp-action="EditUsersInRole" class="btn btn-success" asp-route-roleId="@Model.Id" asp-controller="Administration">Manage Roles</a>
+        </div>
+
+    </div>
+</form>
