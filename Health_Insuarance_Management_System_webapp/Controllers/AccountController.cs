@@ -35,6 +35,39 @@ namespace Health_Insuarance_Management_System_webapp.Controllers
             this.context = context;
         }
         [HttpGet]
+        public IActionResult ChangePasswordUser()
+        {
+
+            return View();
+        }
+
+        [HttpPost]  
+        public async Task<IActionResult> ChangePasswordUser(ChangePasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await userManager.GetUserAsync(User);
+                if (user == null)
+                {
+                    return RedirectToAction("LogIn");
+                }
+                var result = await userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
+                if (!result.Succeeded)
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                    return View();
+                }
+                await signInManager.RefreshSignInAsync(user);
+                return RedirectToAction("Index","Home");
+            }
+            
+            return View(model);
+        }
+
+        [HttpGet]
         public IActionResult Register()
         {
             ViewData["DepartmentId"] = new SelectList(context.Set<DepartmentModel>(), "DeptId", "DeptName");

@@ -35,7 +35,8 @@
                         <td> <img src="@item.PhotoPath" alt="UserImg"></td>
                         <td>@item.Gender</td>
                         <td><a asp-action="EditUser" asp-route-id="@item.Id" class="btn btn-success">Edit</a></td>
-                        <td><a asp-action="DeleteUser" asp-controller="Administration" asp-route-id="@item.Id" class="btn btn-danger">Delete</a></td>
+                        <td><a asp-action="DeleteUser" onclick="return confirm('Are you sure you want to delete user : @item.UserName')"
+                        asp-controller="Administration" asp-route-id="@item.Id" class="btn btn-danger">Delete</a></td>
 
                     </tr>
                 }
