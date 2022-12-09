@@ -4,9 +4,11 @@ using Health_Insuarance_Management_System_webapp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Health_Insuarance_Management_System_webapp.Controllers
@@ -245,7 +247,7 @@ namespace Health_Insuarance_Management_System_webapp.Controllers
                 LastName = user.LastName,
                 Age = user.Age,
                 Gender = user.Gender,
-                DateOfBirth = user.DateOfBirth,
+                //DateOfBirth = user.DateOfBirth,
                 CNIC = user.CNIC,
                 TemporaryAddress = user.TemporaryAddress,
                 PermenantAddress = user.PermenantAddress,
@@ -261,7 +263,7 @@ namespace Health_Insuarance_Management_System_webapp.Controllers
                 Medications = user.Medications,
                 StrenghtOfMedication = user.StrenghtOfMedication,
                 FrequencyTaken = user.FrequencyTaken,
-                JoinDate = user.JoinDate,
+              
                 Salary = user.Salary,
                 DeptId  = user.DeptId,
                 PolicyId = user.PolicyId,
@@ -287,6 +289,29 @@ namespace Health_Insuarance_Management_System_webapp.Controllers
             else
             {
                 user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.Age = model.Age;
+                user.Gender = model.Gender;
+                //user.DateOfBirth = model.DateOfBirth;
+                user.CNIC = model.CNIC;
+                user.TemporaryAddress = model.TemporaryAddress;
+                user.PermenantAddress = model.PermenantAddress;
+                user.Education = model.Education;
+                user.MaritalStatus = model.MaritalStatus;
+                user.PersonalPhoneNumber = model.PersonalPhoneNumber;
+                user.HomePhoneNumber = model.HomePhoneNumber;
+                user.EmergencyPhoneNumber = model.EmergencyPhoneNumber;
+                user.BloodGroup = model.BloodGroup;
+                user.Height = model.Height;
+                user.Weight = model.Weight;
+                user.DetailOfHealthDisease = model.DetailOfHealthDisease;
+                user.Medications = model.Medications;
+                user.StrenghtOfMedication = model.StrenghtOfMedication;
+                user.FrequencyTaken = model.FrequencyTaken;
+                user.Salary = model.Salary;
+                user.DeptId = model.DeptId;
+                user.PolicyId = model.PolicyId;
+
 
 
                 var result = await userManager.UpdateAsync(user);
@@ -305,6 +330,13 @@ namespace Health_Insuarance_Management_System_webapp.Controllers
             }
 
             
+        }
+
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+            var user = await userManager.FindByIdAsync(id);
+           await userManager.DeleteAsync(user);
+            return RedirectToAction("ListUsers");
         }
 
 

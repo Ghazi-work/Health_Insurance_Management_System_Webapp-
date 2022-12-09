@@ -14,7 +14,7 @@ namespace Health_Insuarance_Management_System_webapp.Models
         public string PhotoPath { get; set; }
         public int Age { get; set; }
         public GenderEnum Gender { get; set; }
-        public DateTime DateOfBirth{ get; set; } 
+        public string DateOfBirth{ get; set; } 
         public string CNIC { get; set; }
         public string TemporaryAddress { get; set; }
         public string PermenantAddress { get; set; }
@@ -37,7 +37,7 @@ namespace Health_Insuarance_Management_System_webapp.Models
 
 
         //Admin Enteries
-        public DateTime JoinDate { get; set; }
+      
         public int Salary { get; set; }
 
 

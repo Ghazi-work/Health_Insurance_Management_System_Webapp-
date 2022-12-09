@@ -84,7 +84,7 @@ namespace Health_Insuarance_Management_System_webapp.Controllers
                     Medications = model.Medications,
                     StrenghtOfMedication = model.StrenghtOfMedication,
                     FrequencyTaken  = model.FrequencyTaken,
-                    JoinDate = model.JoinDate,
+                 
                     Salary = model.Salary,
                     DeptId = model.DeptId,
                     PolicyId = model.PolicyId

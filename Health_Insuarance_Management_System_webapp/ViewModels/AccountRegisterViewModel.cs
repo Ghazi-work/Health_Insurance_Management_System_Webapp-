@@ -34,7 +34,8 @@ namespace Health_Insuarance_Management_System_webapp.ViewModels
         [Compare("Password")]
         public string ConfirmPassword { get; set; }
         [Required]
-        public DateTime DateOfBirth { get; set; }
+        //[RegularExpression("^([1-9]|0[1-9]|[12][0-9]|3[0-1])\\/([1-9]|0[1-9]|1[0-2])\\/\\d{4}$", ErrorMessage = "Invalid date format. Use dd/mm/yyyy")]
+        public string DateOfBirth { get; set; }
         [Required]
         [RegularExpression("^[0-9+]{5}-[0-9+]{7}-[0-9]{1}$",ErrorMessage ="Invalid CNIC Format")]
         public string CNIC { get; set; }
@@ -68,8 +69,8 @@ namespace Health_Insuarance_Management_System_webapp.ViewModels
 
 
         //Admin Enteries
-    
-        public DateTime JoinDate { get; set; }
+
+       
 
         public int Salary { get; set; }
 
