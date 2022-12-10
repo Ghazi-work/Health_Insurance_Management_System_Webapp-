@@ -15,6 +15,7 @@ namespace Health_Insuarance_Management_System_webapp.Models
         public string PolicyDescription { get; set; }
         public PolicyDurationEnum PolicyDuration { get; set; }
         public PolicyPaymentEnum PolicyPaymentType { get; set; }
+        public string PhotoPath { get; set; }
         public int Payment { get; set; }
         public int Budget { get;}
     }

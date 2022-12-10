@@ -23,6 +23,8 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\images\employees\" />
+    <Folder Include="wwwroot\images\InsuranceCompany\" />
+    <Folder Include="wwwroot\images\Policies\" />
   </ItemGroup>
 
 </Project>

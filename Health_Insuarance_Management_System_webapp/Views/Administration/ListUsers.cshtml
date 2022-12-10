@@ -32,7 +32,7 @@
                         <td>@item.UserName</td>
                         <td>@item.FirstName @item.LastName</td>
                         <td>@item.CNIC</td>
-                        <td> <img src="@item.PhotoPath" alt="UserImg"></td>
+                        <td> <img src="~/@item.PhotoPath" alt="UserImg" width="80"></td>
                         <td>@item.Gender</td>
                         <td><a asp-action="EditUser" asp-route-id="@item.Id" class="btn btn-success">Edit</a></td>
                         <td><a asp-action="DeleteUser" onclick="return confirm('Are you sure you want to delete user : @item.UserName')"

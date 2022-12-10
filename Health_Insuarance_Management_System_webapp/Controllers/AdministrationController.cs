@@ -95,62 +95,62 @@ namespace Health_Insuarance_Management_System_webapp.Controllers
         }
 
 
-        [HttpPost]
-        public async Task<IActionResult> EditRole(EditRoleViewModel model)
-        {
-            var role = await roleManager.FindByIdAsync(model.Id);
-            if (role == null)
-            {
-                ViewBag.ErrorMessage = $"Role with Id = {model.Id} cannot be found";
-                return View("NotFound");
-            }
-            else
-            {
-                role.Name = model.RoleName;
-                 var result =  await roleManager.UpdateAsync(role);
+        //[HttpPost]
+        //public async Task<IActionResult> EditRole(EditRoleViewModel model)
+        //{
+        //    var role = await roleManager.FindByIdAsync(model.Id);
+        //    if (role == null)
+        //    {
+        //        ViewBag.ErrorMessage = $"Role with Id = {model.Id} cannot be found";
+        //        return View("NotFound");
+        //    }
+        //    else
+        //    {
+        //        role.Name = model.RoleName;
+        //         var result =  await roleManager.UpdateAsync(role);
 
-                if (result.Succeeded)
-                {
-                    return RedirectToAction("RoleList");
-                }
-                else
-                {
-                    foreach (var error in result.Errors)
-                    {
-                        ModelState.AddModelError("", error.Description);
-                    }
-                }
-                return View(model);
-            }      
-        }
-        [HttpGet]
-        public async Task<IActionResult> DeleteRole(string id)
-        {
-            var role = await roleManager.FindByIdAsync(id);
-            if (role == null)
-            {
-                return View("NotFound");
-            }
-            var model = new DeleteRoleViewModel
-            {
-                Id = id,
-                RoleName = role.Name
-            };
-            return View(model);
-        }
+        //        if (result.Succeeded)
+        //        {
+        //            return RedirectToAction("RoleList");
+        //        }
+        //        else
+        //        {
+        //            foreach (var error in result.Errors)
+        //            {
+        //                ModelState.AddModelError("", error.Description);
+        //            }
+        //        }
+        //        return View(model);
+        //    }      
+        //}
+        //[HttpGet]
+        //public async Task<IActionResult> DeleteRole(string id)
+        //{
+        //    var role = await roleManager.FindByIdAsync(id);
+        //    if (role == null)
+        //    {
+        //        return View("NotFound");
+        //    }
+        //    var model = new DeleteRoleViewModel
+        //    {
+        //        Id = id,
+        //        RoleName = role.Name
+        //    };
+        //    return View(model);
+        //}
 
-        [HttpPost]
-        public async Task<IActionResult> DeleteRole(string id, DeleteRoleViewModel model)
-        {
-            var role = await roleManager.FindByIdAsync(id);
-            if (role == null)
-            {
-                return View("NotFound");
-            }
-            await roleManager.DeleteAsync(role);
+        //[HttpPost]
+        //public async Task<IActionResult> DeleteRole(string id, DeleteRoleViewModel model)
+        //{
+        //    var role = await roleManager.FindByIdAsync(id);
+        //    if (role == null)
+        //    {
+        //        return View("NotFound");
+        //    }
+        //    await roleManager.DeleteAsync(role);
            
-            return RedirectToAction("RoleList");
-        }
+        //    return RedirectToAction("RoleList");
+        //}
 
         [HttpGet]
         public async Task<IActionResult> EditUsersInRole(string roleId)

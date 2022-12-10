@@ -48,12 +48,12 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\favicon.ico))</OriginalItemSpec>
     </StaticWebAsset>
-    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\images\employees4ad768bc-4a3a-4f17-872f-b81853bab8c6_employee1w.jpg))">
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\images\employees\44432ce7-e3f4-4889-9798-30d03eead1f3_employee1w.jpg))">
       <SourceType>Package</SourceType>
       <SourceId>Health_Insuarance_Management_System_webapp</SourceId>
       <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
       <BasePath>_content/Health_Insuarance_Management_System_webapp</BasePath>
-      <RelativePath>images\employees4ad768bc-4a3a-4f17-872f-b81853bab8c6_employee1w.jpg</RelativePath>
+      <RelativePath>images\employees\44432ce7-e3f4-4889-9798-30d03eead1f3_employee1w.jpg</RelativePath>
       <AssetKind></AssetKind>
       <AssetMode></AssetMode>
       <AssetRole></AssetRole>
@@ -62,14 +62,14 @@
       <AssetTraitValue></AssetTraitValue>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\images\employees4ad768bc-4a3a-4f17-872f-b81853bab8c6_employee1w.jpg))</OriginalItemSpec>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\images\employees\44432ce7-e3f4-4889-9798-30d03eead1f3_employee1w.jpg))</OriginalItemSpec>
     </StaticWebAsset>
-    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\images\employees\fb1085c2-15e4-4697-a90a-c347c483c8ce_employee1w.jpg))">
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\images\InsuranceCompany\760bcef0-8620-42d2-9660-605103908e18_thibault-penin-zj_zOAaT8as-unsplash.jpg))">
       <SourceType>Package</SourceType>
       <SourceId>Health_Insuarance_Management_System_webapp</SourceId>
       <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
       <BasePath>_content/Health_Insuarance_Management_System_webapp</BasePath>
-      <RelativePath>images\employees\fb1085c2-15e4-4697-a90a-c347c483c8ce_employee1w.jpg</RelativePath>
+      <RelativePath>images\InsuranceCompany\760bcef0-8620-42d2-9660-605103908e18_thibault-penin-zj_zOAaT8as-unsplash.jpg</RelativePath>
       <AssetKind></AssetKind>
       <AssetMode></AssetMode>
       <AssetRole></AssetRole>
@@ -78,7 +78,7 @@
       <AssetTraitValue></AssetTraitValue>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\images\employees\fb1085c2-15e4-4697-a90a-c347c483c8ce_employee1w.jpg))</OriginalItemSpec>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\images\InsuranceCompany\760bcef0-8620-42d2-9660-605103908e18_thibault-penin-zj_zOAaT8as-unsplash.jpg))</OriginalItemSpec>
     </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\js\site.js))">
       <SourceType>Package</SourceType>

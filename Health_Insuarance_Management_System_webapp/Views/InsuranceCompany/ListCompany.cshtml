@@ -1,0 +1,28 @@
+﻿@model List<Health_Insuarance_Management_System_webapp.Models.InsuranceCompanyModel>
+@{
+    ViewData["Title"] = "ListCompany";
+}
+
+<h1>ListCompany</h1>
+
+<div class="container">
+    
+    <div class="row">
+        @{
+            foreach (var item in Model)
+            {
+                <div class="card" style="width: 18rem;">
+                    <img src="~/@item.PhotoPath" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.InsuranceCompanyName</h5>
+                        <p class="card-text">@item.ExtraInformation</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+            }
+
+        }
+    </div>
+
+</div>
+
