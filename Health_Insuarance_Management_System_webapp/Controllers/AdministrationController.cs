@@ -311,6 +311,7 @@ namespace Health_Insuarance_Management_System_webapp.Controllers
                 user.Salary = model.Salary;
                 user.DeptId = model.DeptId;
                 user.PolicyId = model.PolicyId;
+                user.ClaimMoney = model.ClaimMoney;
 
 
 

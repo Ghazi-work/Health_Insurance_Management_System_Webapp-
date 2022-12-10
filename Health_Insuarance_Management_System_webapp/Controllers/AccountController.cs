@@ -34,6 +34,109 @@ namespace Health_Insuarance_Management_System_webapp.Controllers
             this.webHost = webHost;
             this.context = context;
         }
+
+
+        [HttpGet]
+        public async  Task<IActionResult> ChangeDetails(string name)
+        {
+            ViewData["DepartmentId"] = new SelectList(context.Set<DepartmentModel>(), "DeptId", "DeptName");
+            ViewData["PolicyId"] = new SelectList(context.Set<PolicyModel>(), "PolicyId", "PolicyTitle");
+            var user = await userManager.FindByNameAsync(name);
+            if (user == null)
+            {
+                return View("NotFound");
+            }
+            var model = new EditUserViewModel
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Age = user.Age,
+                Gender = user.Gender,
+                //DateOfBirth = user.DateOfBirth,
+                CNIC = user.CNIC,
+                TemporaryAddress = user.TemporaryAddress,
+                PermenantAddress = user.PermenantAddress,
+                Education = user.Education,
+                MaritalStatus = user.MaritalStatus,
+                PersonalPhoneNumber = user.PersonalPhoneNumber,
+                HomePhoneNumber = user.HomePhoneNumber,
+                EmergencyPhoneNumber = user.EmergencyPhoneNumber,
+                BloodGroup = user.BloodGroup,
+                Height = user.Height,
+                Weight = user.Weight,
+                DetailOfHealthDisease = user.DetailOfHealthDisease,
+                Medications = user.Medications,
+                StrenghtOfMedication = user.StrenghtOfMedication,
+                FrequencyTaken = user.FrequencyTaken,
+
+                Salary = user.Salary,
+                DeptId = user.DeptId,
+                PolicyId = user.PolicyId,
+                ClaimMoney = user.ClaimMoney,
+
+            };
+            return View(model);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> ChangeDetails(EditUserViewModel model)
+        {
+            var user = await userManager.FindByIdAsync(model.Id);
+            if (user == null)
+            {
+                return View("NotFound");
+            }
+            else
+            {
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.Age = model.Age;
+                user.Gender = model.Gender;
+                //user.DateOfBirth = model.DateOfBirth;
+                user.CNIC = model.CNIC;
+                user.TemporaryAddress = model.TemporaryAddress;
+                user.PermenantAddress = model.PermenantAddress;
+                user.Education = model.Education;
+                user.MaritalStatus = model.MaritalStatus;
+                user.PersonalPhoneNumber = model.PersonalPhoneNumber;
+                user.HomePhoneNumber = model.HomePhoneNumber;
+                user.EmergencyPhoneNumber = model.EmergencyPhoneNumber;
+                user.BloodGroup = model.BloodGroup;
+                user.Height = model.Height;
+                user.Weight = model.Weight;
+                user.DetailOfHealthDisease = model.DetailOfHealthDisease;
+                user.Medications = model.Medications;
+                user.StrenghtOfMedication = model.StrenghtOfMedication;
+                user.FrequencyTaken = model.FrequencyTaken;
+                user.Salary = model.Salary;
+                user.DeptId = model.DeptId;
+                user.PolicyId = model.PolicyId;
+                user.ClaimMoney = model.ClaimMoney;
+
+
+
+                var result = await userManager.UpdateAsync(user);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index","Home");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(" ", error.Description);
+                }
+
+                return View(model);
+            }
+
+      
+        }
+
+
+
+
         [HttpGet]
         public IActionResult ChangePasswordUser()
         {

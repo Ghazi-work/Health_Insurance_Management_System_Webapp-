@@ -1,17 +1,17 @@
 ﻿@using Health_Insuarance_Management_System_webapp.Enums;
 @model Health_Insuarance_Management_System_webapp.ViewModels.EditUserViewModel
 @{
-    ViewData["Title"] = "EditUser";
+    ViewData["Title"] = "ChangeDetails";
 }
 
-<h1>EditUser</h1>
+<h1>ChangeDetails</h1>
 
-<form  method="post" asp-action="EditUser">
+<form method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-  
-    <div class="border p-3 mt-4 row">
-       
 
+    <div class="border p-3 mt-4 row">
+
+        <input hidden asp-for="Id"/>
 
         <div class="mb-3 col-6">
             <label asp-for="FirstName"></label>
@@ -34,17 +34,17 @@
             <select asp-for="Gender" asp-items="Html.GetEnumSelectList<GenderEnum>()" class="form-control"></select>
             <span asp-validation-for="Gender" class="text-danger"></span>
         </div>
-     @*  <div class="mb-3 col-6">
-            <label asp-for="DateOfBirth"></label>
-            <input asp-for="DateOfBirth" class="form-control" />
-            <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+        @*  <div class="mb-3 col-6">
+        <label asp-for="DateOfBirth"></label>
+        <input asp-for="DateOfBirth" class="form-control" />
+        <span asp-validation-for="DateOfBirth" class="text-danger"></span>
         </div>*@
-         <div class="mb-3 col-6">
+        <div class="mb-3 col-6">
             <label asp-for="MaritalStatus" class="control-label"></label>
             <select asp-for="MaritalStatus" asp-items="Html.GetEnumSelectList<MaritalStatusEnum>()" class="form-control"></select>
             <span asp-validation-for="MaritalStatus" class="text-danger"></span>
         </div>
-       <div class="mb-3 col-6">
+        <div class="mb-3 col-6">
             <label asp-for="CNIC"></label>
             <input asp-for="CNIC" class="form-control" />
             <span asp-validation-for="CNIC" class="text-danger"></span>
@@ -121,56 +121,36 @@
 
         <div class="mb-3 col-6">
             <label asp-for="Salary"></label>
-            <input asp-for="Salary" class="form-control" />
-            <span asp-validation-for="Salary" class="text-danger"></span>
+            <input disabled asp-for="Salary" class="form-control" />
+            <input hidden asp-for="Salary" class="form-control" />
+
+           
         </div>
 
 
         <div class="mb-3 col-6">
             <label asp-for="ClaimMoney"></label>
-            <input asp-for="ClaimMoney" class="form-control" />
-            <span asp-validation-for="ClaimMoney" class="text-danger"></span>
+            <input disabled asp-for="ClaimMoney" class="form-control" />
+            <input hidden asp-for="ClaimMoney" class="form-control" />
+
         </div>
 
         <div class="mb-3 col-6">
             <label asp-for="DeptId" class="control-label"></label>
-            <select asp-for="DeptId" class="form-control" asp-items="ViewBag.DepartmentId"></select>
+            <select disabled asp-for="DeptId" class="form-control" asp-items="ViewBag.DepartmentId"></select>
+            <select hidden asp-for="DeptId" class="form-control" asp-items="ViewBag.DepartmentId"></select>
         </div>
         <div class="mb-3 col-6">
             <label asp-for="PolicyId" class="control-label"></label>
-            <select asp-for="PolicyId" class="form-control" asp-items="ViewBag.PolicyId"></select>
+            <select disabled asp-for="PolicyId" class="form-control" asp-items="ViewBag.PolicyId"></select>
+            <select hidden asp-for="PolicyId" class="form-control" asp-items="ViewBag.PolicyId"></select>
         </div>
 
         <div class="form-group">
             <input type="submit" value="Update" class="btn btn-primary" />
-            <a asp-action="ListUsers" asp-controller="Administration" class="btn btn-info">Cancel</a>
+            <a asp-action="Index" asp-controller="Home" class="btn btn-info">Cancel</a>
         </div>
     </div>
 
 
-    <div class="card">
-        <div class="card-header">
-            <h3>User role</h3>
-        </div>
-        <div class="card-body">
-            @if (Model.Roles.Any())
-            {
-                foreach (var role in Model.Roles)
-                {
-                    <h5 class="card-title">@role</h5>
-
-                    <hr />
-                }
-            }
-            else
-            {
-                <h5 class="card-title">None at the Moment</h5>
-
-            }
-        </div>
-        <div class="card-footer">
-            <a asp-action="EditUsersInRole" class="btn btn-success" asp-route-roleId="@Model.Id" asp-controller="Administration">Manage Roles</a>
-        </div>
-
-    </div>
 </form>
