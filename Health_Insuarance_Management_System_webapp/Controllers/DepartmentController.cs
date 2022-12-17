@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Health_Insuarance_Management_System_webapp.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin,IT")]
     public class DepartmentController : Controller
     {
         private readonly ApplicationDbContext _context;

@@ -7,7 +7,7 @@ namespace Health_Insuarance_Management_System_webapp.ViewModels
     {
         public int Id { get; set; }
         public IFormFile Photo { get; set; }
-        public string PhotoPath { get; set; }
+        public string existingPath { get; set; }
         [Required]
         [Display(Name ="Insurance Company Name")]
         public string InsuranceCompanyName { get; set; }

@@ -426,7 +426,6 @@ D:\Health_Insurance\Health_Insuarance_Management_System_webapp\Health_Insuarance
 D:\Health_Insurance\Health_Insuarance_Management_System_webapp\Health_Insuarance_Management_System_webapp\bin\Debug\netcoreapp3.1\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 D:\Health_Insurance\Health_Insuarance_Management_System_webapp\Health_Insuarance_Management_System_webapp\bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
 D:\Health_Insurance\Health_Insuarance_Management_System_webapp\Health_Insuarance_Management_System_webapp\obj\Debug\netcoreapp3.1\Razor\Views\Account\Register.cshtml.g.cs
-D:\Health_Insurance\Health_Insuarance_Management_System_webapp\Health_Insuarance_Management_System_webapp\obj\Debug\netcoreapp3.1\Razor\Views\Account\LogIn.cshtml.g.cs
 D:\Health_Insurance\Health_Insuarance_Management_System_webapp\Health_Insuarance_Management_System_webapp\obj\Debug\netcoreapp3.1\Razor\Views\Department\Create.cshtml.g.cs
 D:\Health_Insurance\Health_Insuarance_Management_System_webapp\Health_Insuarance_Management_System_webapp\obj\Debug\netcoreapp3.1\Razor\Views\Department\Delete.cshtml.g.cs
 D:\Health_Insurance\Health_Insuarance_Management_System_webapp\Health_Insuarance_Management_System_webapp\obj\Debug\netcoreapp3.1\Razor\Views\Department\Details.cshtml.g.cs
@@ -444,3 +443,7 @@ D:\Health_Insurance\Health_Insuarance_Management_System_webapp\Health_Insuarance
 D:\Health_Insurance\Health_Insuarance_Management_System_webapp\Health_Insuarance_Management_System_webapp\obj\Debug\netcoreapp3.1\Razor\Views\Account\ChangeDetails.cshtml.g.cs
 D:\Health_Insurance\Health_Insuarance_Management_System_webapp\Health_Insuarance_Management_System_webapp\obj\Debug\netcoreapp3.1\Razor\Views\InsuranceCompany\Create.cshtml.g.cs
 D:\Health_Insurance\Health_Insuarance_Management_System_webapp\Health_Insuarance_Management_System_webapp\obj\Debug\netcoreapp3.1\Razor\Views\InsuranceCompany\ListCompany.cshtml.g.cs
+D:\Health_Insurance\Health_Insuarance_Management_System_webapp\Health_Insuarance_Management_System_webapp\bin\Debug\netcoreapp3.1\libman.json
+D:\Health_Insurance\Health_Insuarance_Management_System_webapp\Health_Insuarance_Management_System_webapp\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Layout2.cshtml.g.cs
+D:\Health_Insurance\Health_Insuarance_Management_System_webapp\Health_Insuarance_Management_System_webapp\obj\Debug\netcoreapp3.1\Razor\Views\Account\LogIn.cshtml.g.cs
+D:\Health_Insurance\Health_Insuarance_Management_System_webapp\Health_Insuarance_Management_System_webapp\obj\Debug\netcoreapp3.1\Razor\Views\InsuranceCompany\EditCompany.cshtml.g.cs
