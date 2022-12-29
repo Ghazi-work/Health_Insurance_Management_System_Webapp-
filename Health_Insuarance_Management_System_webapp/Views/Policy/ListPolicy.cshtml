@@ -1,0 +1,53 @@
+﻿@model List<Health_Insuarance_Management_System_webapp.Models.PolicyModel>
+@{
+    ViewData["Title"] = "Policies";
+    Layout = "~/Views/Shared/_Layout3.cshtml";
+}
+
+
+
+
+
+<div class="container">
+    
+    <div class="row">
+        @{
+            if (Model.Any())
+            {
+
+
+                foreach (var item in Model)
+                {
+                    var photopath = "";
+                    if (item.PhotoPath == null)
+                    {
+                        photopath = "images/Policies/policyAlternative.jpg";
+                    }
+                    else
+                    {
+                        photopath = item.PhotoPath;
+                    }
+                    //var photopath = (item.PhotoPath ?? "images/Policies/policyAlternative.jpg");
+                <div class="card mx-4 mt-2" style="width: 20rem;">
+                    <img src="~/@photopath" class="card-img-top w-100" alt="policy image">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.PolicyTitle</h5>
+                        <p class="card-text">@item.PolicyDescription</p>
+                        <h6 class="card-text">PKR @item.Payment</h6>
+                        <a asp-action="EditPolicy" asp-route-id="@item.PolicyId" asp-controller="Policy" class="btn btn-primary">Edit</a>
+                    </div>
+                </div>
+            }
+             }else
+            {
+                <div class="col-9"> 
+                <h4 class="mt-4">Sorry no policies available you can create new policy by clicking the button below.</h4>
+                <a asp-action="Create" asp-controller="Policy" class="btn btn-primary">Create Policy</a>
+                </div>
+            }
+
+        }
+    </div>
+
+</div>
+

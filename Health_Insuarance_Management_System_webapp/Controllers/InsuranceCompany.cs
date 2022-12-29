@@ -67,6 +67,7 @@ namespace Health_Insuarance_Management_System_webapp.Controllers
   
                 context.Add(company2);
                 context.SaveChanges();
+                TempData["success"] = "Insurance Company Added successfully";
                 return RedirectToAction("Index","Home");
             }
             return View(model);
@@ -146,23 +147,50 @@ namespace Health_Insuarance_Management_System_webapp.Controllers
 
 
               
-            comp.InsuranceCompanyName = model.InsuranceCompanyName;
-            comp.OfficialEmail = model.OfficialEmail;
-            comp.HelplineNumber = model.HelplineNumber;
-            comp.HeadOfficeAddress = model.HeadOfficeAddress;
-            comp.ExtraInformation = model.ExtraInformation;
-            comp.WebsiteUrl = model.WebsiteUrl;
+                comp.InsuranceCompanyName = model.InsuranceCompanyName;
+                comp.OfficialEmail = model.OfficialEmail;
+                comp.HelplineNumber = model.HelplineNumber;
+                comp.HeadOfficeAddress = model.HeadOfficeAddress;
+                comp.ExtraInformation = model.ExtraInformation;
+                comp.WebsiteUrl = model.WebsiteUrl;
 
                 context.Insurance_Companies.Update(comp);
                 context.SaveChanges();
-               return RedirectToAction("ListCompany");
+                TempData["success"] = "Information Updated Successfully";
+                return RedirectToAction("ListCompany");
             
             }
-            return View();
+            return View(model);
         }
 
+        [HttpGet]
+        public IActionResult DeleteCompany(int id)
+        {
+            var comp = context.Insurance_Companies.Find(id);
 
+           
+            return View(comp);
+        }
 
+        [HttpPost]
+        public IActionResult DeleteCompany(InsuranceCompanyModel model)
+        {
+            var comp = context.Insurance_Companies.Find(model.CompanyId);
+            var oldDirectory = Path.Combine(webHost.WebRootPath, model.PhotoPath);
+            if (System.IO.File.Exists(oldDirectory))
+            {
+                System.IO.File.Delete(oldDirectory);
+            }
+            context.Remove(comp);
+            context.SaveChanges();
+            return RedirectToAction("ListCompany");
+        }
+        //public async Task<IActionResult> DeleteUser(string id)
+        //{
+        //    var user = await userManager.FindByIdAsync(id);
+        //    await userManager.DeleteAsync(user);
+        //    return RedirectToAction("ListUsers");
+        //}
 
     }
 }

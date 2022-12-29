@@ -17,6 +17,6 @@ namespace Health_Insuarance_Management_System_webapp.Models
         public PolicyPaymentEnum PolicyPaymentType { get; set; }
         public string PhotoPath { get; set; }
         public int Payment { get; set; }
-        public int Budget { get;}
+        public int Budget { get; set; }
     }
 }

@@ -31,11 +31,18 @@
                             {
 
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark btn btn-link" asp-area="" asp-controller="Account" asp-action="ChangeDetails" style="width:auto">Policies</a>
+                                    <a class="nav-link text-dark btn btn-link" asp-area="" asp-controller="PolicyRequest" asp-action="ListPolicyUser" style="width:auto">Policies</a>
                                 </li>
 
-
-
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark btn btn-link" asp-area="" asp-controller="PolicyRequest" asp-route-name="@User.Identity.Name" asp-action="PolicyRequestStatus" style="width:auto">Policy Request Status</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark btn btn-link" asp-area="" asp-controller="PolicyRequest" asp-route-name="@User.Identity.Name" asp-action="ClaimPolicy" style="width:auto">Claim a policy</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark btn btn-link" asp-area="" asp-controller="PolicyRequest" asp-route-name="@User.Identity.Name" asp-action="ClaimRequestStatus" style="width:auto">Claim Request Status</a>
+                                </li>
                             }
 
                         }
@@ -57,6 +64,22 @@
                                         <a class="dropdown-item" asp-action="Index" asp-controller="Department">List Department</a>
                                         
                                     
+                                    </div>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Manage Policy
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" asp-action="Create" asp-controller="Policy">Create Policy</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" asp-action="ListPolicy" asp-controller="Policy">List Policy</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" asp-action="RequestList" asp-controller="Policy">Requests by user</a>
+                                        <a class="dropdown-item" asp-action="ClaimsList" asp-controller="ClaimRequest">Claims requested</a>
+
+
+
                                     </div>
                                 </li>
                                 <li class="nav-item dropdown">
@@ -255,7 +278,7 @@
             </div>
         </div>
     </nav>*@
-        <div class="container">
+        <div class="container-fluid">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>

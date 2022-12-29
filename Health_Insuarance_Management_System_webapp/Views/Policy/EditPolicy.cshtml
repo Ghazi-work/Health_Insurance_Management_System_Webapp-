@@ -1,0 +1,80 @@
+﻿@using Health_Insuarance_Management_System_webapp.Enums;
+@model Health_Insuarance_Management_System_webapp.ViewModels.CreatePolicyViewModel
+@{
+    ViewData["Title"] = "Edit Policy";
+    Layout = "~/Views/Shared/_Layout3.cshtml";
+    var photopath = (Model.PhotoPath ?? "images/Policies/policyAlternative.jpg");
+}
+
+
+
+
+<form asp-action="EditPolicy" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="border p-3 mt-4 row">
+          <input asp-for="Id" hidden />
+          <input asp-for="PhotoPath" hidden />
+
+
+        <div class="col-5">
+            <label asp-for="PolicyTitle"></label>
+            <input asp-for="PolicyTitle" class="form-control" />
+            <span asp-validation-for="PolicyTitle" class="text-danger"></span>
+        </div>
+
+
+        <div class="mb-3 col-7">
+            <label asp-for="PolicyDescription"></label>
+            <textarea asp-for="PolicyDescription" class="form-control" rows="7"> </textarea>
+            <span asp-validation-for="PolicyDescription" class="text-danger"></span>
+        </div>
+
+
+        <div class="mb-3 col-6 ">
+            <label asp-for="Photo"></label>
+            <img src="~/@photopath" class="w-50"   asp-append-version="true"  />
+            <input id="inpBox" asp-for="Photo" class="form-control" />
+            
+        </div>
+
+
+        <div class="mb-3 col-6">
+            <label asp-for="Payment"></label>
+            <input asp-for="Payment" class="form-control" />
+            <span asp-validation-for="Payment" class="text-danger"></span>
+        </div>
+        <div class="mb-3 col-6">
+            <label asp-for="Budget"></label>
+            <input asp-for="Budget" class="form-control" placeholder="E.g 1000" />
+            <span asp-validation-for="Budget" class="text-danger"></span>
+        </div>
+
+
+        <div class="mb-3 col-6">
+            <label asp-for="PolicyDuration" class="control-label"></label>
+            <select asp-for="PolicyDuration" asp-items="Html.GetEnumSelectList<PolicyDurationEnum>()" class="form-control"></select>
+            <span asp-validation-for="PolicyDuration" class="text-danger"></span>
+        </div>
+        <div class="mb-3 col-6">
+            <label asp-for="PolicyPaymentType" class="control-label"></label>
+            <select asp-for="PolicyPaymentType" asp-items="Html.GetEnumSelectList<PolicyPaymentEnum>()" class="form-control"></select>
+            <span asp-validation-for="PolicyPaymentType" class="text-danger"></span>
+        </div>
+
+
+        <div class="mb-3 col-6">
+            <label asp-for="CompanyId" class="control-label"></label>
+            <select asp-for="CompanyId" class="form-control" asp-items="ViewBag.CompanyId"></select>
+        </div>
+
+
+
+
+        <input type="submit" value="Update" class="btn btn-primary" />
+        <a class="btn btn-secondary mt-4" asp-action="ListPolicy">Back</a>
+       
+
+
+    </div>
+</form>
+

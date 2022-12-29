@@ -1,0 +1,48 @@
+﻿@model List<Health_Insuarance_Management_System_webapp.Models.PolicyRequestModel>
+@{
+    ViewData["Title"] = "Policy Request Status";
+    Layout = "~/Views/Shared/_Layout3.cshtml";
+}
+
+<h4>Policy Request Status:</h4>
+
+
+<div class="container">
+    <div class="row">
+        @{
+            foreach (var item in Model)
+            {
+                <div class="col-12 mt-5">
+                    <div class="card text-center">
+                        <div class="card-header">
+                            Policy Requested by: @item.FnameLname
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">@item.Status</h5>
+                            <img src="~/@item.PhotoPath" class="w-25" alt="img" />
+
+                        </div>
+                        <div class="card-footer">
+                            Date: @item.Date
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+
+    </div>
+</div>
+@*
+@{
+    foreach (var item in Model)
+    {
+       
+        <p>@item.FnameLname</p>
+        <p>@item.Date</p>
+        <p>@item.CompId</p>
+        <p>@item.PolicyId</p>
+        
+
+        <p>@item.Status</p>
+    }
+}*@

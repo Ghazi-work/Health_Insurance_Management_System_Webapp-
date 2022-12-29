@@ -1,0 +1,57 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<ApplicationUser> signInManager
+@model List<Health_Insuarance_Management_System_webapp.Models.PolicyModel>
+@{
+    ViewData["Title"] = "Policies For You";
+    Layout = "~/Views/Shared/_Layout3.cshtml";
+}
+
+
+
+
+
+
+<div class="container">
+
+    <div class="row justify-content-center">
+        @{
+            if (Model.Any())
+            {
+
+
+                foreach (var item in Model)
+                {
+                    var photopath = "";
+                    if (item.PhotoPath == null)
+                    {
+                        photopath = "images/Policies/policyAlternative.jpg";
+                    }
+                    else
+                    {
+                        photopath = item.PhotoPath;
+                    }
+                    //var photopath = (item.PhotoPath ?? "images/Policies/policyAlternative.jpg");
+                    <div class="card mx-4 mt-2">
+                        <img src="~/@photopath" class="card-img-top w-100" alt="policy image">
+                        <div class="card-body">
+                            <h5 class="card-title">@item.PolicyTitle</h5>
+                            <p class="card-text">@item.PolicyDescription</p>
+                            <h6 class="card-text">PKR @item.Payment</h6>
+                            <a asp-action="PolicyRequestUser" asp-route-id="@item.PolicyId" asp-route-name="@User.Identity.Name" asp-controller="PolicyRequest" class="btn btn-primary">Take this policy</a>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="col-9">
+                    <h4 class="mt-4">Sorry no policies available right now, ask admin to add policies</h4>
+                    <a asp-action="Index" asp-controller="Home" class="btn btn-primary">Home</a>
+                </div>
+            }
+
+        }
+    </div>
+
+</div>
+

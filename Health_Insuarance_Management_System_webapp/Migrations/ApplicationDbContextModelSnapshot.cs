@@ -163,6 +163,52 @@ namespace Health_Insuarance_Management_System_webapp.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("Health_Insuarance_Management_System_webapp.Models.ClaimPolicyModel", b =>
+                {
+                    b.Property<int>("ClaimId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AdminReasons")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ClaimAmount")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CompId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FnameLname")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Photopath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("PolicyId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("PostingDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserReason")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ClaimId");
+
+                    b.HasIndex("CompId");
+
+                    b.HasIndex("PolicyId");
+
+                    b.ToTable("Claim_Policy");
+                });
+
             modelBuilder.Entity("Health_Insuarance_Management_System_webapp.Models.DepartmentModel", b =>
                 {
                     b.Property<int>("DeptId")
@@ -224,6 +270,9 @@ namespace Health_Insuarance_Management_System_webapp.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("Budget")
+                        .HasColumnType("int");
+
                     b.Property<int>("CompanyId")
                         .HasColumnType("int");
 
@@ -250,6 +299,46 @@ namespace Health_Insuarance_Management_System_webapp.Migrations
                     b.HasIndex("CompanyId");
 
                     b.ToTable("Policies");
+                });
+
+            modelBuilder.Entity("Health_Insuarance_Management_System_webapp.Models.PolicyRequestModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("CompId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FnameLname")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhotoPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("PolicyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Reason")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompId");
+
+                    b.HasIndex("PolicyId");
+
+                    b.ToTable("Policy_Requests");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -398,6 +487,17 @@ namespace Health_Insuarance_Management_System_webapp.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Health_Insuarance_Management_System_webapp.Models.ClaimPolicyModel", b =>
+                {
+                    b.HasOne("Health_Insuarance_Management_System_webapp.Models.InsuranceCompanyModel", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompId");
+
+                    b.HasOne("Health_Insuarance_Management_System_webapp.Models.PolicyModel", "Policy")
+                        .WithMany()
+                        .HasForeignKey("PolicyId");
+                });
+
             modelBuilder.Entity("Health_Insuarance_Management_System_webapp.Models.PolicyModel", b =>
                 {
                     b.HasOne("Health_Insuarance_Management_System_webapp.Models.InsuranceCompanyModel", "Company")
@@ -405,6 +505,17 @@ namespace Health_Insuarance_Management_System_webapp.Migrations
                         .HasForeignKey("CompanyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Health_Insuarance_Management_System_webapp.Models.PolicyRequestModel", b =>
+                {
+                    b.HasOne("Health_Insuarance_Management_System_webapp.Models.InsuranceCompanyModel", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompId");
+
+                    b.HasOne("Health_Insuarance_Management_System_webapp.Models.PolicyModel", "Policy")
+                        .WithMany()
+                        .HasForeignKey("PolicyId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

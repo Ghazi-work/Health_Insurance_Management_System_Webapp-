@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace Health_Insuarance_Management_System_webapp.ViewModels
 {
@@ -15,6 +16,8 @@ namespace Health_Insuarance_Management_System_webapp.ViewModels
         {
             Roles = new List<string>();
         }
+        public string PhotoPath { get; set; }
+         public IFormFile Photo { get; set; }
         public string Id { get; set; }
 
         [Required]
@@ -23,7 +26,7 @@ namespace Health_Insuarance_Management_System_webapp.ViewModels
         [Required]
         [MaxLength(30, ErrorMessage = "Last Name cannot be more than 30 characters")]
         public string LastName { get; set; }
-        //public IFormFile Photo { get; set; }
+      
         [Required]
         [Range(18, 80, ErrorMessage = "Age must be between 18 - 80 ")]
         public int Age { get; set; }
@@ -41,6 +44,7 @@ namespace Health_Insuarance_Management_System_webapp.ViewModels
         //[Compare("Password")]
         //public string ConfirmPassword { get; set; }
         [Required]
+        [ValidateNever]
        // [RegularExpression("^([1-9]|0[1-9]|[12][0-9]|3[0-1])\\/([1-9]|0[1-9]|1[0-2])\\/\\d{4}$", ErrorMessage = "Invalid date format. Use dd/mm/yyyy")]
         public string DateOfBirth { get; set; }
         [Required]

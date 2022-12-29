@@ -1,14 +1,16 @@
 ﻿@model IEnumerable<ApplicationUser>
 @{
-    ViewBag.Title = "All Roles";
+    ViewBag.Title = "Employees";
+    Layout = "~/Views/Shared/_Layout3.cshtml";
 }
 
-<h1>User List</h1>
+
 
 @{
     if (Model.Any())
     {
-        <table class="table table-bordered">
+        <a class="btn btn-success" asp-action="Register" asp-controller="Account">Register User</a>
+        <table class="table table-bordered mt-3">
             <tr>
                 <th>User Id</th>
                 <th>User Name</th>
@@ -25,17 +27,19 @@
 
             @{
                 foreach (var item in Model)
-                {
+                { 
+                    var photopath = (item.PhotoPath ?? "images/employees/policyAlternative.jpg");
                     <tr>
                         <td>@item.Id</td>
 
                         <td>@item.UserName</td>
                         <td>@item.FirstName @item.LastName</td>
                         <td>@item.CNIC</td>
-                        <td> <img src="~/@item.PhotoPath" alt="UserImg" width="80"></td>
+                        <td> <img src="~/@photopath" alt="UserImg" width="80"></td>
                         <td>@item.Gender</td>
                         <td><a asp-action="EditUser" asp-route-id="@item.Id" class="btn btn-success">Edit</a></td>
-                        <td><a asp-action="DeleteUser" onclick="return confirm('Are you sure you want to delete user : @item.UserName')"
+                        <td>
+                            <a asp-action="DeleteUser" onclick="return confirm('Are you sure you want to delete user: @item.UserName')"
                         asp-controller="Administration" asp-route-id="@item.Id" class="btn btn-danger">Delete</a></td>
 
                     </tr>
@@ -50,3 +54,52 @@
         <a asp-action="Register" asp-controller="Account" class="btn btn-primary">Create User</a>
     }
 }
+
+@section Scripts{
+
+    <script>
+
+
+        //function ValidateInput(){
+                
+        //    $ans = confirm("Do you want to delete ? ");
+
+        //    return $ans;
+        //}
+
+        //function ValidateInput() 
+        //{
+        //    let a = true;
+
+        //    Swal.fire({
+        //        title: 'Are you sure?',
+        //        text: "You won't be able to revert this!",
+        //        icon: 'warning',
+        //        showCancelButton: true,
+        //        confirmButtonColor: '#3085d6',
+        //        cancelButtonColor: '#d33',
+        //        confirmButtonText: 'Yes, delete it!'
+        //    }).then((result) => {
+        //        if (result.isConfirmed) {
+        //            a = true;
+        //            Swal.fire(
+        //                'Deleted!',
+        //                'Your file has been deleted.',
+        //                'success'
+        //            )
+
+        //        }
+        //        else{
+        //            a = false;
+        //        }
+        //    })
+        //    return a;
+            
+        //}
+
+        
+    </script>
+
+}
+
+@*//onclick = "return confirm('Are you sure you want to delete user : @item.UserName')"*@

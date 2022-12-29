@@ -1,15 +1,16 @@
 ﻿@model IEnumerable<Health_Insuarance_Management_System_webapp.Models.DepartmentModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Departments";
+    Layout = "~/Views/Shared/_Layout3.cshtml";
 }
 
-<h1>Index</h1>
+
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-success">Create New</a>
 </p>
-<table class="table">
+<table class="table  table-bordered mt-3">
     <thead>
         <tr>
             <th>
@@ -37,9 +38,9 @@
                 @Html.DisplayFor(modelItem => item.DeptLocation)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.DeptId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.DeptId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.DeptId">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.DeptId" class="btn btn-success">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.DeptId" class="btn btn-info">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.DeptId" class="btn btn-danger">Delete</a>
             </td>
         </tr>
 }
