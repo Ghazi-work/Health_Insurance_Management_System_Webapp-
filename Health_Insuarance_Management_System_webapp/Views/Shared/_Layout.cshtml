@@ -6,45 +6,116 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Insurance System</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/bootstrap/css/bootstrap.min.css" />
+    <link href="~/Template/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="~/Template/css/bootstrap-icons.css" rel="stylesheet">
+
+    <link href="~/Template/css/templatemo-kind-heart-charity.css" rel="stylesheet">
 </head>
 <body>
+
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Insurance System</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">HIMS</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                        @{
+                            if (signInManager.IsSignedIn(User) && User.IsInRole("Employee"))
+                            {
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark btn btn-link" asp-area="" asp-controller="PolicyRequest" asp-action="ListPolicyUser" style="width:auto">Policies</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark btn btn-link" asp-area="" asp-controller="PolicyRequest" asp-route-name="@User.Identity.Name" asp-action="PolicyRequestStatus" style="width:auto">Policy Request Status</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark btn btn-link" asp-area="" asp-controller="PolicyRequest" asp-route-name="@User.Identity.Name" asp-action="ClaimPolicy" style="width:auto">Claim a policy</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark btn btn-link" asp-area="" asp-controller="PolicyRequest" asp-route-name="@User.Identity.Name" asp-action="ClaimRequestStatus" style="width:auto">Claim Request Status</a>
+                                </li>
+                            }
+
+                        }
+                     
                        
                         @{
                             if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
                             {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Administration" asp-action="RoleList">Create Role</a>
+                             
+                              
+                               
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Manage Department
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" asp-action="Create" asp-controller="Department">Create Department</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" asp-action="Index" asp-controller="Department">List Department</a>
+                                        
+                                    
+                                    </div>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Policy" asp-action="Index">Policies</a>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Manage Policy
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" asp-action="Create" asp-controller="Policy">Create Policy</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" asp-action="ListPolicy" asp-controller="Policy">List Policy</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" asp-action="RequestList" asp-controller="Policy">Requests by user</a>
+                                        <a class="dropdown-item" asp-action="ClaimsList" asp-controller="ClaimRequest">Claims requested</a>
+
+
+
+                                    </div>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Administration" asp-action="ListUsers">User List</a>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Manage Users
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Administration" asp-action="ListUsers">User List</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Register a user</a>
+                                    </div>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Department" asp-action="Create">Departments</a>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Manage Roles
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Administration" asp-action="CreateRole">Create Role</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Administration" asp-action="RoleList">Role List</a>
+                                    </div>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="InsuranceCompany" asp-action="Index">Insurance Companies</a>
+
+
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Manage Insurance Companies
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" asp-controller="InsuranceCompany" asp-action="ListCompany">List Insurance Companies</a>
+                                        <a class="dropdown-item" asp-controller="InsuranceCompany" asp-action="Create">Add new Company</a>
+                                       
+                                    </div>
                                 </li>
+                               
+                               
                             }
                         }
                       
@@ -55,19 +126,26 @@
                 </div>
                 <ul class="navbar-nav ml-auto">
                     @{
+                        
                         if (signInManager.IsSignedIn(User))
                         {
-                             <li class="nav-item">
-                                <a class="nav-link text-dark btn btn-link" asp-area="" asp-controller="Account" asp-action="LogOut" style="width:auto">Logout @User.Identity.Name </a>
-                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark btn btn-link" asp-area="" asp-controller="Account" asp-route-name="@User.Identity.Name" asp-action="ChangeDetails" style="width:auto">Change Details</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark btn btn-link" asp-area="" asp-controller="Account" asp-action="ChangePasswordUser" style="width:auto">Change Password</a>
-                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                   Account
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="nav-link text-dark btn btn-link" asp-area="" asp-controller="Account" asp-route-name="@User.Identity.Name" asp-action="ChangeDetails" style="width:auto">Change Details</a>
+
+                                    <a class="nav-link text-dark btn btn-link" asp-area="" asp-controller="Account" asp-action="ChangePasswordUser" style="width:auto">Change Password</a>
+                                    <a class="nav-link text-dark btn btn-link" asp-area="" asp-controller="Account" asp-action="LogOut" style="width:auto">Logout @User.Identity.Name </a>
 
 
+
+                                </div>
+                            </li>
+                          
+                         
+                           
                         }
                         else
                         {
@@ -75,7 +153,7 @@
                                 <a class="nav-link text-dark btn btn-outline-success" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
                              </li>
                             <li class="nav-item mx-2">
-                                <a class="nav-link text-dark btn btn-outline-light" asp-area="" asp-controller="Account" asp-action="LogIn">Log in</a>
+                                <a class="nav-link text-dark btn btn-outline-info" asp-area="" asp-controller="Account" asp-action="LogIn">Log in</a>
                             </li>
                         }
                     }
@@ -84,22 +162,235 @@
             </div>
         </nav>
     </header>
-    <div class="container">
+
+
+    @*//dwqdqdqd//*@
+
+
+   @* <header class="site-header">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-8 col-12 d-flex flex-wrap">
+                    <p class="d-flex me-4 mb-0">
+                        <i class="bi-geo-alt me-2"></i>
+                        Akershusstranda 20, 0150 Oslo, Norway
+                    </p>
+
+                    <p class="d-flex mb-0">
+                        <i class="bi-envelope me-2"></i>
+
+                        <a href="mailto:info@company.com">
+                            info@company.com
+                        </a>
+                    </p>
+                </div>
+
+                <div class="col-lg-3 col-12 ms-auto d-lg-block d-none">
+                    <ul class="social-icon">
+                        <li class="social-icon-item">
+                            <a href="#" class="social-icon-link bi-twitter"></a>
+                        </li>
+
+                        <li class="social-icon-item">
+                            <a href="#" class="social-icon-link bi-facebook"></a>
+                        </li>
+
+                        <li class="social-icon-item">
+                            <a href="#" class="social-icon-link bi-instagram"></a>
+                        </li>
+
+                        <li class="social-icon-item">
+                            <a href="#" class="social-icon-link bi-youtube"></a>
+                        </li>
+
+                        <li class="social-icon-item">
+                            <a href="#" class="social-icon-link bi-whatsapp"></a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </header>
+    <nav class="navbar navbar-expand-lg bg-light shadow-lg">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="~/Template/images/logo.png" class="logo img-fluid" alt="Img">
+                <span>
+                    Insurance System
+                    <small>Where you finds best insurance policy </small>
+                </span>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link click-scroll" href="#top">Home</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link click-scroll" href="#section_2">About</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link click-scroll" href="#section_3">Polices</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link click-scroll" href="#section_4">Feedback</a>
+                    </li>
+
+                    <li class="nav-item ">
+                        <a class="nav-link click-scroll" href="#section_5" id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">News</a>
+
+                        <!-- <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
+                            <li><a class="dropdown-item" href="news.html">News Listing</a></li>
+
+                            <li><a class="dropdown-item" href="news-detail.html">News Detail</a></li>
+                        </ul> -->
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link click-scroll" href="#section_6">Contact</a>
+                    </li>
+                    @{
+                        if (signInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item ms-3">
+                                <a class="nav-link custom-btn custom-border-btn btn" asp-area="" asp-controller="Account" asp-action="LogOut" style="width:auto">Logout @User.Identity.Name </a>
+
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item ms-3">
+                                <a class="nav-link custom-btn custom-border-btn btn" asp-action="LogIn" asp-controller="Account">Login</a>
+                            </li>
+                        }
+                    }
+                   
+                </ul>
+            </div>
+        </div>
+    </nav>*@
+        <div class="container-fluid">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+
+  @*  <footer class="site-footer">
         <div class="container">
-            &copy; 2022 - Health_Insuarance_Management_System_webapp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <div class="row">
+                <div class="col-lg-3 col-12 mb-4">
+                    <img src="~/Template/images/logo.png" class="logo img-fluid" alt="">
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-12 mb-4">
+                    <h5 class="site-footer-title mb-3">Quick Links</h5>
+
+                    <ul class="footer-menu">
+                        <li class="footer-menu-item"><a href="#" class="footer-menu-link">Our Story</a></li>
+
+                        <li class="footer-menu-item"><a href="#" class="footer-menu-link">Newsroom</a></li>
+
+                        <li class="footer-menu-item"><a href="#" class="footer-menu-link">Causes</a></li>
+
+                        <li class="footer-menu-item"><a href="#" class="footer-menu-link">Become a volunteer</a></li>
+
+                        <li class="footer-menu-item"><a href="#" class="footer-menu-link">Partner with us</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-12 mx-auto">
+                    <h5 class="site-footer-title mb-3">Contact Infomation</h5>
+
+                    <p class="text-white d-flex mb-2">
+                        <i class="bi-telephone me-2"></i>
+
+                        <a href="tel: 120-240-9600" class="site-footer-link">
+                            120-240-9600
+                        </a>
+                    </p>
+
+                    <p class="text-white d-flex">
+                        <i class="bi-envelope me-2"></i>
+
+                        <a href="mailto:info@yourgmail.com" class="site-footer-link">
+                            donate@charity.org
+                        </a>
+                    </p>
+
+                    <p class="text-white d-flex mt-3">
+                        <i class="bi-geo-alt me-2"></i>
+                        Akershusstranda 20, 0150 Oslo, Norway
+                    </p>
+
+                    <a href="#" class="custom-btn btn mt-3">Get Direction</a>
+                </div>
+            </div>
         </div>
-    </footer>
+
+        <div class="site-footer-bottom">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-6 col-md-7 col-12">
+                        <p class="copyright-text mb-0">
+                            Copyright © 2036 <a href="#">Kind Heart</a> Charity Org.
+                            Design: <a href="https://templatemo.com" target="_blank">TemplateMo</a>
+                        </p>
+                    </div>
+
+                    <div class="col-lg-6 col-md-5 col-12 d-flex justify-content-center align-items-center mx-auto">
+                        <ul class="social-icon">
+                            <li class="social-icon-item">
+                                <a href="#" class="social-icon-link bi-twitter"></a>
+                            </li>
+
+                            <li class="social-icon-item">
+                                <a href="#" class="social-icon-link bi-facebook"></a>
+                            </li>
+
+                            <li class="social-icon-item">
+                                <a href="#" class="social-icon-link bi-instagram"></a>
+                            </li>
+
+                            <li class="social-icon-item">
+                                <a href="#" class="social-icon-link bi-linkedin"></a>
+                            </li>
+
+                            <li class="social-icon-item">
+                                <a href="https://youtube.com/templatemo" class="social-icon-link bi-youtube"></a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </footer>*@
+    <script src="~/Template/js/jquery.min.js"></script>
+    <script src="~/Template/js/bootstrap.min.js"></script>
+    <script src="~/Template/js/jquery.sticky.js"></script>
+    <script src="~/Template/js/click-scroll.js"></script>
+    <script src="~/Template/js/counter.js"></script>
+    <script src="~/Template/js/custom.js"></script>
     <script src="~/lib/jquery/dist/jquery.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script src="~/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+   
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>
+    

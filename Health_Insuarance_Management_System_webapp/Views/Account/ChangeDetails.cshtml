@@ -1,17 +1,28 @@
 ﻿@using Health_Insuarance_Management_System_webapp.Enums;
 @model Health_Insuarance_Management_System_webapp.ViewModels.EditUserViewModel
 @{
-    ViewData["Title"] = "ChangeDetails";
+    Layout = "~/Views/Shared/_Layout3.cshtml";
+
+    ViewData["Title"] = "Change Details";
+    string s = @Model.PhotoPath;
+    ViewData["Profile"] = s;
 }
 
-<h1>ChangeDetails</h1>
 
-<form method="post">
+
+<form method="post" enctype="multipart/form-data">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-    <div class="border p-3 mt-4 row">
-
-        <input hidden asp-for="Id"/>
+    <div class="border p-3  row">
+        <div class="mb-3 col-9">
+            <img src="~/@Model.PhotoPath" asp-append-version="true" class="w-25 img-profile rounded-circle" />
+        </div>
+        <div class="mb-3 col-6 ">
+            <label asp-for="Photo"></label>
+            <input id="inpBox" asp-for="Photo" name="file" class="form-control" />
+        </div>
+        <input hidden asp-for="Id" />
+        <input hidden asp-for="PhotoPath" />
 
         <div class="mb-3 col-6">
             <label asp-for="FirstName"></label>
@@ -148,7 +159,17 @@
 
         <div class="form-group">
             <input type="submit" value="Update" class="btn btn-primary" />
-            <a asp-action="Index" asp-controller="Home" class="btn btn-info">Cancel</a>
+            @{
+                if (User.IsInRole("Employee"))
+                {
+                  <a asp-action="Index" asp-controller="User" class="btn btn-info">Cancel</a>
+                }
+                else
+                {
+                   <a asp-action="Index" asp-controller="Home" class="btn btn-info">Cancel</a>
+                }
+            }
+            
         </div>
     </div>
 

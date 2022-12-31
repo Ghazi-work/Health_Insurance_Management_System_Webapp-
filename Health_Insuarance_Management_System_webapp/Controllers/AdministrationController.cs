@@ -1,33 +1,40 @@
 ﻿using Health_Insuarance_Management_System_webapp.DataAccess;
 using Health_Insuarance_Management_System_webapp.Models;
 using Health_Insuarance_Management_System_webapp.ViewModels;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Health_Insuarance_Management_System_webapp.Controllers
 {
-    [Authorize(Roles = "Admin,IT")]
+    [Authorize(Roles = "Admin,IT, Finance Manager")]
   //  [Authorize(Roles = "IT(support)")]
     public class AdministrationController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;
 		private readonly UserManager<ApplicationUser> userManager;
         private readonly ApplicationDbContext context;
+        private readonly IWebHostEnvironment webHost;
 
         public AdministrationController(RoleManager<IdentityRole> roleManager,
                                          UserManager<ApplicationUser> userManager,
-                                         ApplicationDbContext context)
+                                         ApplicationDbContext context,
+                                         IWebHostEnvironment webHost)
         {
             this.roleManager = roleManager;
 			this.userManager = userManager;
             this.context = context;
+            this.webHost = webHost;
         }
         [HttpGet]
         public IActionResult CreateRole()
@@ -47,6 +54,8 @@ namespace Health_Insuarance_Management_System_webapp.Controllers
                 IdentityResult result = await roleManager.CreateAsync(identityRole);
                 if (result.Succeeded)
                 {
+                    TempData["success"] = "Role Created Successfully";
+
                     return RedirectToAction("RoleList", "Administration");
                 }
                 foreach (IdentityError error in result.Errors)
@@ -95,62 +104,62 @@ namespace Health_Insuarance_Management_System_webapp.Controllers
         }
 
 
-        [HttpPost]
-        public async Task<IActionResult> EditRole(EditRoleViewModel model)
-        {
-            var role = await roleManager.FindByIdAsync(model.Id);
-            if (role == null)
-            {
-                ViewBag.ErrorMessage = $"Role with Id = {model.Id} cannot be found";
-                return View("NotFound");
-            }
-            else
-            {
-                role.Name = model.RoleName;
-                 var result =  await roleManager.UpdateAsync(role);
+        //[HttpPost]
+        //public async Task<IActionResult> EditRole(EditRoleViewModel model)
+        //{
+        //    var role = await roleManager.FindByIdAsync(model.Id);
+        //    if (role == null)
+        //    {
+        //        ViewBag.ErrorMessage = $"Role with Id = {model.Id} cannot be found";
+        //        return View("NotFound");
+        //    }
+        //    else
+        //    {
+        //        role.Name = model.RoleName;
+        //         var result =  await roleManager.UpdateAsync(role);
 
-                if (result.Succeeded)
-                {
-                    return RedirectToAction("RoleList");
-                }
-                else
-                {
-                    foreach (var error in result.Errors)
-                    {
-                        ModelState.AddModelError("", error.Description);
-                    }
-                }
-                return View(model);
-            }      
-        }
-        [HttpGet]
-        public async Task<IActionResult> DeleteRole(string id)
-        {
-            var role = await roleManager.FindByIdAsync(id);
-            if (role == null)
-            {
-                return View("NotFound");
-            }
-            var model = new DeleteRoleViewModel
-            {
-                Id = id,
-                RoleName = role.Name
-            };
-            return View(model);
-        }
+        //        if (result.Succeeded)
+        //        {
+        //            return RedirectToAction("RoleList");
+        //        }
+        //        else
+        //        {
+        //            foreach (var error in result.Errors)
+        //            {
+        //                ModelState.AddModelError("", error.Description);
+        //            }
+        //        }
+        //        return View(model);
+        //    }      
+        //}
+        //[HttpGet]
+        //public async Task<IActionResult> DeleteRole(string id)
+        //{
+        //    var role = await roleManager.FindByIdAsync(id);
+        //    if (role == null)
+        //    {
+        //        return View("NotFound");
+        //    }
+        //    var model = new DeleteRoleViewModel
+        //    {
+        //        Id = id,
+        //        RoleName = role.Name
+        //    };
+        //    return View(model);
+        //}
 
-        [HttpPost]
-        public async Task<IActionResult> DeleteRole(string id, DeleteRoleViewModel model)
-        {
-            var role = await roleManager.FindByIdAsync(id);
-            if (role == null)
-            {
-                return View("NotFound");
-            }
-            await roleManager.DeleteAsync(role);
+        //[HttpPost]
+        //public async Task<IActionResult> DeleteRole(string id, DeleteRoleViewModel model)
+        //{
+        //    var role = await roleManager.FindByIdAsync(id);
+        //    if (role == null)
+        //    {
+        //        return View("NotFound");
+        //    }
+        //    await roleManager.DeleteAsync(role);
            
-            return RedirectToAction("RoleList");
-        }
+        //    return RedirectToAction("RoleList");
+        //}
 
         [HttpGet]
         public async Task<IActionResult> EditUsersInRole(string roleId)
@@ -216,6 +225,7 @@ namespace Health_Insuarance_Management_System_webapp.Controllers
                     }
                     else
                     {
+                        TempData["success"] = "Role assigned Successfully";
                         return RedirectToAction("EditRole", new { Id = roleId });
                     }
                 }
@@ -227,8 +237,10 @@ namespace Health_Insuarance_Management_System_webapp.Controllers
         {
             var userList = userManager.Users;
             return View(userList);
+
         }
         [HttpGet]
+        [Authorize(Roles = "Admin,IT,Finance Manager")]
         public async Task<IActionResult> EditUser(string id)
         {
             ViewData["DepartmentId"] = new SelectList(context.Set<DepartmentModel>(), "DeptId", "DeptName");
@@ -242,6 +254,7 @@ namespace Health_Insuarance_Management_System_webapp.Controllers
 
             var model = new EditUserViewModel
             {
+                PhotoPath = user.PhotoPath,
                 Id = user.Id,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
@@ -278,66 +291,131 @@ namespace Health_Insuarance_Management_System_webapp.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin,IT,Finance Manager")]
         public async Task<IActionResult> EditUser(EditUserViewModel model)
         {
-        
             var user = await userManager.FindByIdAsync(model.Id);
-            if (user == null)
+
+            if (ModelState.IsValid)
             {
-                return View("NotFound");
-            }
-            else
-            {
-                user.FirstName = model.FirstName;
-                user.LastName = model.LastName;
-                user.Age = model.Age;
-                user.Gender = model.Gender;
-                //user.DateOfBirth = model.DateOfBirth;
-                user.CNIC = model.CNIC;
-                user.TemporaryAddress = model.TemporaryAddress;
-                user.PermenantAddress = model.PermenantAddress;
-                user.Education = model.Education;
-                user.MaritalStatus = model.MaritalStatus;
-                user.PersonalPhoneNumber = model.PersonalPhoneNumber;
-                user.HomePhoneNumber = model.HomePhoneNumber;
-                user.EmergencyPhoneNumber = model.EmergencyPhoneNumber;
-                user.BloodGroup = model.BloodGroup;
-                user.Height = model.Height;
-                user.Weight = model.Weight;
-                user.DetailOfHealthDisease = model.DetailOfHealthDisease;
-                user.Medications = model.Medications;
-                user.StrenghtOfMedication = model.StrenghtOfMedication;
-                user.FrequencyTaken = model.FrequencyTaken;
-                user.Salary = model.Salary;
-                user.DeptId = model.DeptId;
-                user.PolicyId = model.PolicyId;
-                user.ClaimMoney = model.ClaimMoney;
-
-
-
-                var result = await userManager.UpdateAsync(user);
-                if (result.Succeeded)
+                if (user == null)
                 {
-                    return RedirectToAction("ListUsers");
+                    return View("NotFound");
                 }
-           
-                foreach (var error in result.Errors)
+                else
+                {
+
+                    var folder = "";
+                    if (model.Photo != null)
+                    {
+
+                        folder = @"images/employees/";
+                        folder += Guid.NewGuid().ToString() + "_" + model.Photo.FileName;
+                        var serverFolder = Path.Combine(webHost.WebRootPath, folder);
+                        using (var fileStream = new FileStream(serverFolder, FileMode.Create))
+                        {
+                            model.Photo.CopyTo(fileStream);
+                        }
+                        user.PhotoPath = folder;
+
+                        if (model.PhotoPath != null)
+                        {
+                            var oldDirectory = Path.Combine(webHost.WebRootPath, model.PhotoPath);
+                            if (System.IO.File.Exists(oldDirectory))
+                            {
+                                System.IO.File.Delete(oldDirectory);
+                            }
+
+                        }
+                    }
+                    else
+                    {
+                        user.PhotoPath = model.PhotoPath;
+                    }
+
+                    user.FirstName = model.FirstName;
+                    user.LastName = model.LastName;
+                    user.Age = model.Age;
+                    user.Gender = model.Gender;
+                    user.CNIC = model.CNIC;
+                    user.TemporaryAddress = model.TemporaryAddress;
+                    user.PermenantAddress = model.PermenantAddress;
+                    user.Education = model.Education;
+                    user.MaritalStatus = model.MaritalStatus;
+                    user.PersonalPhoneNumber = model.PersonalPhoneNumber;
+                    user.HomePhoneNumber = model.HomePhoneNumber;
+                    user.EmergencyPhoneNumber = model.EmergencyPhoneNumber;
+                    user.BloodGroup = model.BloodGroup;
+                    user.Height = model.Height;
+                    user.Weight = model.Weight;
+                    user.DetailOfHealthDisease = model.DetailOfHealthDisease;
+                    user.Medications = model.Medications;
+                    user.StrenghtOfMedication = model.StrenghtOfMedication;
+                    user.FrequencyTaken = model.FrequencyTaken;
+                    user.Salary = model.Salary;
+                    user.DeptId = model.DeptId;
+                    user.PolicyId = model.PolicyId;
+                    user.ClaimMoney = model.ClaimMoney;
+
+
+
+                    var result = await userManager.UpdateAsync(user);
+                    if (result.Succeeded)
+                    {
+                        if (User.IsInRole("Admin"))
+                        {
+                            TempData["success"] = "User information Updated";
+                            return RedirectToAction("ListUsers");
+                        }
+                        else
+                        {
+                            TempData["success"] = "Amount updated successfully";
+                            return RedirectToAction("ClaimsListForFinance", "ClaimAmountRequest");
+                        }
+                        
+                    }
+
+                    foreach (var error in result.Errors)
                     {
                         ModelState.AddModelError(" ", error.Description);
                     }
 
-                return View(model);
-               
+                    return View(model);
+
+                }
             }
+            else
+            {
+                return View(model);
+            }
+        
+           
 
             
         }
 
         public async Task<IActionResult> DeleteUser(string id)
         {
-            var user = await userManager.FindByIdAsync(id);
-           await userManager.DeleteAsync(user);
-            return RedirectToAction("ListUsers");
+            if (id == "b66dfac2-d3b0-4872-8f9c-07d80c025aaf")
+            {
+                return View("NotFound");
+            }
+            else
+            {
+                var user = await userManager.FindByIdAsync(id);
+                await userManager.DeleteAsync(user);
+                TempData["success"] = "User Deleted successfully";
+                return RedirectToAction("ListUsers");
+            }
+          
+        }
+
+        public IActionResult ClaimsListForAdmin()
+        {
+            ViewData["PolicyId"] = new SelectList(context.Set<PolicyModel>(), "PolicyId", "PolicyTitle");
+            ViewData["CompanyId"] = new SelectList(context.Set<InsuranceCompanyModel>(), "CompanyId", "InsuranceCompanyName");
+            var claims = context.Claim_Policy.ToList();
+            return View(claims);
         }
 
 
@@ -359,5 +437,17 @@ namespace Health_Insuarance_Management_System_webapp.Controllers
 
         //}
 
+
+        #region API CALLS
+        [HttpGet]
+        public IActionResult GetAllUsers()
+        {
+            var users = userManager.Users;
+            return Json(new { data = users });
+        }
+        #endregion
+
     }
+
+
 }

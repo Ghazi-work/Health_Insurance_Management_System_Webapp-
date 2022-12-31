@@ -1,162 +1,243 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Health_Insuarance_Management_System_webapp.DataAccess;
+using Health_Insuarance_Management_System_webapp.Models;
+using Health_Insuarance_Management_System_webapp.ViewModels;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Health_Insuarance_Management_System_webapp.DataAccess;
-using Health_Insuarance_Management_System_webapp.Models;
+using System.IO;
+using System;
 using Microsoft.AspNetCore.Authorization;
+using System.Linq;
 
 namespace Health_Insuarance_Management_System_webapp.Controllers
 {
-    [Authorize]
+    [Authorize(Roles ="Admin")]
     public class PolicyController : Controller
     {
-        private readonly ApplicationDbContext _context;
-
-        public PolicyController(ApplicationDbContext context)
+        private readonly IWebHostEnvironment webHost;
+        private readonly ApplicationDbContext context;
+        public PolicyController(IWebHostEnvironment webHost, ApplicationDbContext context )
         {
-            _context = context;
+            this.webHost = webHost;
+            this.context = context;
         }
-
-        // GET: Policy
-        public async Task<IActionResult> Index()
-        {
-            var applicationDbContext = _context.Policies.Include(p => p.Company);
-            return View(await applicationDbContext.ToListAsync());
-        }
-
-        // GET: Policy/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var policyModel = await _context.Policies
-                .Include(p => p.Company)
-                .FirstOrDefaultAsync(m => m.PolicyId == id);
-            if (policyModel == null)
-            {
-                return NotFound();
-            }
-
-            return View(policyModel);
-        }
-
-        // GET: Policy/Create
+        [HttpGet]
         public IActionResult Create()
         {
-            ViewData["CompanyId"] = new SelectList(_context.Insurance_Companies, "CompanyId", "InsuranceCompanyName");
+            ViewData["CompanyId"] = new SelectList(context.Set<InsuranceCompanyModel>(), "CompanyId", "InsuranceCompanyName");
+
             return View();
         }
 
-        // POST: Policy/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PolicyId,CompanyId,PolicyTitle,PolicyDescription,PolicyDuration,PolicyPaymentType,Payment")] PolicyModel policyModel)
+        public IActionResult Create(CreatePolicyViewModel model, IFormFile file)
+        {
+            var folder = "";
+            if (file != null)
+            {
+                folder = @"images/Policies/";
+                folder += Guid.NewGuid().ToString() + "_" + file.FileName;
+                var serverFolder = Path.Combine(webHost.WebRootPath, folder);
+                using (var fileStream = new FileStream(serverFolder, FileMode.Create))
+                {
+                    file.CopyTo(fileStream);
+                }
+                //file.CopyTo(new FileStream(serverFolder, FileMode.Create));
+            }
+            if (ModelState.IsValid)
+            {
+                var policy = new PolicyModel
+                {
+                    PolicyTitle = model.PolicyTitle,
+                    PolicyDescription = model.PolicyDescription,
+                    PolicyDuration = model.PolicyDuration,
+                    PolicyPaymentType = model.PolicyPaymentType,
+                    Payment = model.Payment,
+                    Budget = model.Budget,
+                    CompanyId = model.CompanyId,
+                    PhotoPath = folder
+                };
+                context.Add(policy);
+                context.SaveChanges();
+                TempData["success"] = "Policy Created Successfully";
+                return RedirectToAction("ListPolicy", "Policy");
+
+            }
+
+            return View(model);
+        }
+
+        [HttpGet]
+       
+        public IActionResult ListPolicy()
+        {
+            var policies = context.Policies.ToList();
+
+            return View(policies);
+        }
+        [HttpGet]
+
+        public IActionResult RequestList()
+        {
+            ViewData["PolicyId"] = new SelectList(context.Set<PolicyModel>(), "PolicyId", "PolicyTitle");
+            ViewData["CompanyId"] = new SelectList(context.Set<InsuranceCompanyModel>(), "CompanyId", "InsuranceCompanyName");
+            var requests = context.Policy_Requests.ToList();
+
+            return View(requests);
+        }
+
+        [HttpGet]
+        public IActionResult EditPolicyRequest(int id)
+        {
+            ViewData["PolicyId"] = new SelectList(context.Set<PolicyModel>(), "PolicyId", "PolicyTitle");
+            ViewData["CompanyId"] = new SelectList(context.Set<InsuranceCompanyModel>(), "CompanyId", "InsuranceCompanyName");
+            var request = context.Policy_Requests.Find(id);
+            if (request == null)
+            {
+                return View("NotFound");
+            }
+            PolicyRequestModel model = new PolicyRequestModel
+            {
+                UserName = request.UserName,
+                FnameLname = request.FnameLname,
+                PolicyId = request.PolicyId,
+                CompId = request.CompId,
+                Reason = request.Reason,
+                PhotoPath = request.PhotoPath,
+                Date = request.Date,
+                Status = request.Status
+
+
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult EditPolicyRequest(PolicyRequestModel model)
+        {
+
+            PolicyRequestModel request = context.Policy_Requests.Find(model.Id);
+            if (request == null)
+            {
+                return View("NotFound");
+            }
+
+            if (ModelState.IsValid)
+            {
+
+                request.UserName = model.UserName;
+                request.FnameLname = model.FnameLname;
+                request.PolicyId = model.PolicyId;
+                request.CompId = model.CompId;
+                request.Reason = model.Reason;
+                request.PhotoPath = model.PhotoPath;
+                request.Date = model.Date;
+                request.Status = model.Status;
+
+                context.Policy_Requests.Update(request);
+                context.SaveChanges();
+                TempData["success"] = "Request Status updated";
+                return RedirectToAction("RequestList");
+
+
+
+            }
+           
+            return View(model);
+        }
+
+
+
+
+
+        [HttpGet]
+    
+        public IActionResult EditPolicy(int id)
+        {
+            ViewData["CompanyId"] = new SelectList(context.Set<InsuranceCompanyModel>(), "CompanyId", "InsuranceCompanyName");
+            var policy = context.Policies.Find(id);
+            if (policy == null)
+            {
+                return View("NotFound");
+            }
+            CreatePolicyViewModel model = new CreatePolicyViewModel
+            {
+                Id = policy.PolicyId,
+                PolicyTitle = policy.PolicyTitle,
+                PolicyDescription = policy.PolicyDescription,
+                PolicyDuration = policy.PolicyDuration,
+                PolicyPaymentType = policy.PolicyPaymentType,
+                Payment = policy.Payment,
+                Budget = policy.Budget,
+                CompanyId = policy.CompanyId,
+                PhotoPath = policy.PhotoPath
+            };
+
+
+            return View(model);
+        }
+
+
+        [HttpPost]
+        public IActionResult EditPolicy(CreatePolicyViewModel model)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(policyModel);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["CompanyId"] = new SelectList(_context.Insurance_Companies, "CompanyId", "CompanyId", policyModel.CompanyId);
-            return View(policyModel);
-        }
 
-        // GET: Policy/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var policyModel = await _context.Policies.FindAsync(id);
-            if (policyModel == null)
-            {
-                return NotFound();
-            }
-            ViewData["CompanyId"] = new SelectList(_context.Insurance_Companies, "CompanyId", "CompanyId", policyModel.CompanyId);
-            return View(policyModel);
-        }
+                PolicyModel policy = context.Policies.Find(model.Id);
 
-        // POST: Policy/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PolicyId,CompanyId,PolicyTitle,PolicyDescription,PolicyDuration,PolicyPaymentType,Payment")] PolicyModel policyModel)
-        {
-            if (id != policyModel.PolicyId)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
+                var folder = "";
+                if (model.Photo != null)
                 {
-                    _context.Update(policyModel);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!PolicyModelExists(policyModel.PolicyId))
+
+                    folder = @"images/Policies/";
+                    folder += Guid.NewGuid().ToString() + "_" + model.Photo.FileName;
+                    var serverFolder = Path.Combine(webHost.WebRootPath, folder);
+                    using (var fileStream = new FileStream(serverFolder, FileMode.Create))
                     {
-                        return NotFound();
+                        model.Photo.CopyTo(fileStream);
                     }
-                    else
+                    policy.PhotoPath = folder;
+
+                    if (model.PhotoPath != null)
                     {
-                        throw;
+                        var oldDirectory = Path.Combine(webHost.WebRootPath, model.PhotoPath);
+                        if (System.IO.File.Exists(oldDirectory))
+                        {
+                            System.IO.File.Delete(oldDirectory);
+                        }
+
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                else
+                {
+                    policy.PhotoPath = model.PhotoPath;
+                }
+
+
+
+                //comp.InsuranceCompanyName = model.InsuranceCompanyName;
+                policy.PolicyTitle = model.PolicyTitle;
+                policy.PolicyDescription = model.PolicyDescription;
+                policy.PolicyDuration = model.PolicyDuration;
+                policy.PolicyPaymentType = model.PolicyPaymentType;
+                policy.Payment = model.Payment;
+                policy.Budget = model.Budget;
+                policy.CompanyId = model.CompanyId;
+
+
+                context.Policies.Update(policy);
+                context.SaveChanges();
+                TempData["success"] = "Policy Updated Successfully";
+                return RedirectToAction("ListPolicy");
+
             }
-            ViewData["CompanyId"] = new SelectList(_context.Insurance_Companies, "CompanyId", "CompanyId", policyModel.CompanyId);
-            return View(policyModel);
+            return View(model);
         }
 
-        // GET: Policy/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var policyModel = await _context.Policies
-                .Include(p => p.Company)
-                .FirstOrDefaultAsync(m => m.PolicyId == id);
-            if (policyModel == null)
-            {
-                return NotFound();
-            }
-
-            return View(policyModel);
-        }
-
-        // POST: Policy/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var policyModel = await _context.Policies.FindAsync(id);
-            _context.Policies.Remove(policyModel);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool PolicyModelExists(int id)
-        {
-            return _context.Policies.Any(e => e.PolicyId == id);
-        }
     }
 }

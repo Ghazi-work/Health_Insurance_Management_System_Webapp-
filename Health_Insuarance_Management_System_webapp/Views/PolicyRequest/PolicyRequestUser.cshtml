@@ -1,0 +1,65 @@
+﻿@using Health_Insuarance_Management_System_webapp.Enums;
+@model Health_Insuarance_Management_System_webapp.ViewModels.PolicyRequestUserViewModel
+@{
+    ViewData["Title"] = "Policy Request";
+    Layout = "~/Views/Shared/_Layout3.cshtml";
+}
+
+<h3>Policy Request to Admin</h3>
+
+<form asp-action="PolicyRequestUser" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="border p-3 mt-4 row">
+        <input asp-for="Id" hidden />
+        <input asp-for="PhotoPath" hidden />
+        <div class="col-12">
+            <img src="~/@Model.PhotoPath" class="w-50" alt="img" />
+        </div>
+
+        <div class="col-6">
+            <label asp-for="UserName"></label>
+            <input asp-for="UserName" disabled class="form-control" />
+            <input asp-for="UserName" hidden/>
+            
+        </div>
+
+        <div class="col-6">
+            <label asp-for="FnameLname"></label>
+            <input asp-for="FnameLname" disabled class="form-control" />
+            <input asp-for="FnameLname" hidden />
+
+        </div>
+        <div class="mb-3 col-6">
+            <label asp-for="PolicyId" class="control-label"></label>
+            <select disabled asp-for="PolicyId" class="form-control" asp-items="ViewBag.PolicyId"></select>
+            <select hidden asp-for="PolicyId" class="form-control" asp-items="ViewBag.PolicyId"></select>
+        </div>
+        <div class="mb-3 col-6">
+            <label asp-for="CompId" class="control-label"></label>
+            <select disabled asp-for="CompId" class="form-control" asp-items="ViewBag.CompanyId"></select>
+            <select hidden asp-for="CompId" class="form-control" asp-items="ViewBag.CompanyId"></select>
+        </div>
+
+        <div class="mb-3 col-12">
+            <label asp-for="Reason"></label>
+            <textarea asp-for="Reason" class="form-control" rows="5"> </textarea>
+            <span asp-validation-for="Reason" class="text-danger"></span>
+        </div>
+
+
+        
+      @*  <div class="mb-3 col-6">
+            <label asp-for="PolicyPaymentType" class="control-label"></label>
+            <select asp-for="PolicyPaymentType" asp-items="Html.GetEnumSelectList<PolicyPaymentEnum>()" class="form-control"></select>
+            <span asp-validation-for="PolicyPaymentType" class="text-danger"></span>
+        </div>*@
+
+
+  
+
+        <input type="submit" value="Send Request" class="btn btn-primary" />
+        <a class="btn btn-secondary mt-2" asp-action="ListPolicyUser">Cancel</a>
+
+
+    </div>
+</form>

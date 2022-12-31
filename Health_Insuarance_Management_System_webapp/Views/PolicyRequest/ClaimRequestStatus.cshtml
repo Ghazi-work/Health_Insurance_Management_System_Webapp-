@@ -1,0 +1,35 @@
+﻿@model List<Health_Insuarance_Management_System_webapp.Models.ClaimPolicyModel>
+@{
+    ViewData["Title"] = "Claim Request Status";
+    Layout = "~/Views/Shared/_Layout3.cshtml";
+}
+
+
+
+<div class="container">
+    <div class="row">
+        @{
+            foreach (var item in Model)
+            {
+                <div class="col-12 mt-5">
+                    <div class="card text-center">
+                        <div class="card-header">
+                            Claim Request by: @item.FnameLname
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">@item.Status </h5>
+                            <h6 class="card-text">
+                                Claim Amount: @item.ClaimAmount. <br>For the policy: @item.PolicyId <br><br>
+                            Admin reason: @item.AdminReasons</h6>
+                           
+                        </div>
+                        <div class="card-footer">
+                            Date: @item.PostingDate
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+
+    </div>
+</div>

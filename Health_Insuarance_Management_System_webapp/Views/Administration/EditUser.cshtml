@@ -1,17 +1,25 @@
 ﻿@using Health_Insuarance_Management_System_webapp.Enums;
 @model Health_Insuarance_Management_System_webapp.ViewModels.EditUserViewModel
 @{
-    ViewData["Title"] = "EditUser";
+    ViewData["Title"] = "Edit User";
+    Layout = "~/Views/Shared/_Layout3.cshtml";
 }
 
-<h1>EditUser</h1>
 
-<form  method="post" asp-action="EditUser">
+
+<form method="post" asp-action="EditUser" enctype="multipart/form-data">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
   
     <div class="border p-3 mt-4 row">
-       
-
+        <input hidden asp-for="Id" />
+        <input hidden asp-for="PhotoPath" />
+        <div class="mb-3 col-9">
+              <img src="~/@Model.PhotoPath" asp-append-version="true" class="w-25" />
+        </div>
+        <div class="mb-3 col-8">
+            <input  asp-for="Photo" class="form-control" />
+        </div>
+        
 
         <div class="mb-3 col-6">
             <label asp-for="FirstName"></label>

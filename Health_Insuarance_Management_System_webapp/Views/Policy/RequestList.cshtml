@@ -1,0 +1,80 @@
+﻿@using Health_Insuarance_Management_System_webapp.Enums;
+@model List<Health_Insuarance_Management_System_webapp.Models.PolicyRequestModel>
+@{
+    ViewData["Title"] = "Insurance request";
+    Layout = "~/Views/Shared/_Layout3.cshtml";
+}
+
+
+
+@{
+    if (Model.Any())
+    {
+        <div class="container-fluid">
+        <div class="row">
+    
+      
+      
+        <table class="table table-bordered">
+            <tr>
+
+           
+                <th>Employee Name</th>
+                <th>Policy Title</th>
+                <th>Policy Image</th>
+                <th>Company Name</th>
+                <th>Reason</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Details</th>
+                <th>Edit</th>
+                <th>Delete</th>
+
+
+            </tr>
+
+
+            @{
+                foreach (var item in Model)
+                {
+                    var photopath = (item.PhotoPath ?? "images/policies/policyAlternative.jpg");
+                    <tr>
+                      
+
+                      
+                        <td>@item.FnameLname</td>
+                        <td> <select asp-for="@item.PolicyId" disabled asp-items="ViewBag.PolicyId"></select></td>
+                        <td hidden> <select asp-for="@item.PolicyId" asp-items="ViewBag.PolicyId"></select></td>
+                        <td> <img src="~/@photopath" alt="UserImg" width="80"></td>
+                        <td><select asp-for="@item.CompId" disabled asp-items="ViewBag.CompanyId"></select></td>
+                        <td hidden><select asp-for="@item.CompId" asp-items="ViewBag.CompanyId"></select></td>
+                   
+                        <td>@item.Date</td>
+                        <td>@item.Status</td>
+                        <td hidden> <select asp-for="@item.Status"  asp-items="Html.GetEnumSelectList<StatusEnum>()"></select></td>
+                        <td><a asp-action="EditUser" asp-controller="Administration" asp-route-id="@item.UserName" class="btn btn-info">Update policy</a></td>
+
+                        <td><a asp-action="EditPolicyRequest" asp-route-id="@item.Id" class="btn btn-success">Edit</a></td>
+                        <td>
+                            <a asp-action="DeleteUser" onclick="return confirm('Are you sure you want to delete user': @item.UserName request?)"
+                            asp-controller="Administration" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                        </td>
+
+                    </tr>
+                }
+            }
+        </table>
+                
+            </div>
+        </div>
+
+    }
+    else
+    {
+        <h2>No requests available at the moment.</h2>
+        <a asp-action="Index" asp-controller="Account" class="btn btn-primary">Go back</a>
+
+     
+    }
+}
+

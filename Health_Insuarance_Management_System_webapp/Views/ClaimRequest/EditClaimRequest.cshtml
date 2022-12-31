@@ -1,0 +1,99 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<ApplicationUser> signInManager
+@using Health_Insuarance_Management_System_webapp.Enums;
+@model Health_Insuarance_Management_System_webapp.Models.ClaimPolicyModel
+@{
+    ViewData["Title"] = "Edit Claim Request";
+    Layout = "~/Views/Shared/_Layout3.cshtml";
+    var photopath = (Model.Photopath ?? "images/Policies/policyAlternative.jpg");
+}
+
+
+
+
+<form asp-action="EditClaimRequest" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="border p-3 mt-4 row">
+        <input asp-for="ClaimId" hidden />
+        <input asp-for="Photopath" hidden />
+
+        <div class="col-5">
+            <label asp-for="UserId"></label>
+            <input asp-for="UserId" disabled class="form-control p-2" />
+            <input asp-for="UserId" hidden class="form-control" />
+
+        </div>
+
+        <div class="col-5">
+            <label asp-for="FnameLname"></label>
+            <input asp-for="FnameLname" disabled class="form-control p-2" />
+            <input asp-for="FnameLname" hidden class="form-control" />
+
+        </div>
+        <div class="col-5">
+            <label asp-for="ClaimAmount"></label>
+            <input asp-for="ClaimAmount" disabled class="form-control p-2" />
+            <input asp-for="ClaimAmount" hidden class="form-control" />
+
+        </div>
+        <div class="col-5">
+            <label asp-for="PostingDate"></label>
+            <input asp-for="PostingDate" disabled class="form-control p-4" />
+            <input asp-for="PostingDate" hidden class="form-control" />
+
+        </div>
+        <div class="col-12">
+            <img src="~/@photopath" alt="Bill image unavailable" asp-append-version="true" class="w-25 mt-2" />
+        </div>
+        <div class="mb-3 col-6">
+            <label asp-for="PolicyId" class="control-label"></label>
+            <select asp-for="PolicyId" asp-items="ViewBag.PolicyId" disabled class="form-control p-2"></select>
+            <select asp-for="PolicyId" asp-items="ViewBag.PolicyId" hidden class="form-control"></select>
+
+        </div>
+        <div class="mb-3 col-6">
+            <label asp-for="CompId" class="control-label"></label>
+            <select asp-for="CompId" asp-items="ViewBag.CompanyId" disabled class="form-control p-2"></select>
+            <select asp-for="CompId" asp-items="ViewBag.CompanyId" hidden class="form-control"></select>
+
+        </div>
+
+        <div class="mb-3 col-7">
+            <label asp-for="UserReason"></label>
+            <textarea asp-for="UserReason" disabled class="form-control" rows="5"> </textarea>
+            <textarea asp-for="UserReason" hidden class="form-control" rows="5"> </textarea>
+
+        </div>
+        <div class="mb-3 col-7">
+            <label asp-for="AdminReasons"></label>
+            <textarea asp-for="AdminReasons"class="form-control" rows="5"> </textarea>
+            
+
+        </div>
+
+        <div class="mb-3 col-6">
+            <label asp-for="Status" class="control-label"></label>
+            <select asp-for="Status" asp-items="Html.GetEnumSelectList<StatusEnum>()" class="form-control"></select>
+            <span asp-validation-for="Status" class="text-danger"></span>
+        </div>
+
+
+
+
+
+        <input type="submit" value="Update" asp-route-id="@Model.ClaimId" class="btn btn-primary" />
+        @{
+            if (User.IsInRole("Admin"))
+            {
+                <a asp-action="ClaimsListForAdmin" asp-controller="Administration" class="mt-2 btn btn-secondary">Cancel</a>
+
+            }else
+            {
+              <a asp-action="ClaimsList" asp-controller="ClaimRequest" class="mt-2 btn btn-secondary">Cancel</a>
+
+            }
+        }
+
+
+    </div>
+</form>

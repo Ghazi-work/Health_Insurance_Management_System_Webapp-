@@ -1,13 +1,14 @@
 ﻿@using Health_Insuarance_Management_System_webapp.ViewModels;
 @model List<UserRoleViewModel>
 @{
-    ViewData["Title"] = "EditUsersInRole";
+    ViewData["Title"] = "Edit Users In Role";
+    Layout = "~/Views/Shared/_Layout3.cshtml";
 }
 @{
     var roleId = ViewBag.roleId;
 }
 
-<h1>EditUsersInRole</h1>
+
 
 <form method="post">
     <div class="card">

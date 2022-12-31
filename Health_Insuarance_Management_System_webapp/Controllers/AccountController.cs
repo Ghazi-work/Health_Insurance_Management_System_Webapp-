@@ -48,6 +48,7 @@ namespace Health_Insuarance_Management_System_webapp.Controllers
             }
             var model = new EditUserViewModel
             {
+                PhotoPath = user.PhotoPath,
                 Id = user.Id,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
@@ -81,57 +82,153 @@ namespace Health_Insuarance_Management_System_webapp.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> ChangeDetails(EditUserViewModel model)
+        public async Task<IActionResult> ChangeDetails(EditUserViewModel model, IFormFile file)
         {
             var user = await userManager.FindByIdAsync(model.Id);
-            if (user == null)
+
+            if (ModelState.IsValid)
             {
-                return View("NotFound");
+                if (user == null)
+                {
+                    return View("NotFound");
+                }
+                else
+                {
+
+                    var folder = "";
+                    if (file != null)
+                    {
+
+                        folder = @"images/employees/";
+                        folder += Guid.NewGuid().ToString() + "_" + file.FileName;
+                        var serverFolder = Path.Combine(webHost.WebRootPath, folder);
+                        using (var fileStream = new FileStream(serverFolder, FileMode.Create))
+                        {
+                            file.CopyTo(fileStream);
+                        }
+                        user.PhotoPath = folder;
+
+                        if (model.PhotoPath != null)
+                        {
+                            var oldDirectory = Path.Combine(webHost.WebRootPath, model.PhotoPath);
+                            if (System.IO.File.Exists(oldDirectory))
+                            {
+                                System.IO.File.Delete(oldDirectory);
+                            }
+
+                        }
+                    }
+                    else
+                    {
+                        user.PhotoPath = model.PhotoPath;
+                    }
+
+                    user.FirstName = model.FirstName;
+                    user.LastName = model.LastName;
+                    user.Age = model.Age;
+                    user.Gender = model.Gender;
+                    user.CNIC = model.CNIC;
+                    user.TemporaryAddress = model.TemporaryAddress;
+                    user.PermenantAddress = model.PermenantAddress;
+                    user.Education = model.Education;
+                    user.MaritalStatus = model.MaritalStatus;
+                    user.PersonalPhoneNumber = model.PersonalPhoneNumber;
+                    user.HomePhoneNumber = model.HomePhoneNumber;
+                    user.EmergencyPhoneNumber = model.EmergencyPhoneNumber;
+                    user.BloodGroup = model.BloodGroup;
+                    user.Height = model.Height;
+                    user.Weight = model.Weight;
+                    user.DetailOfHealthDisease = model.DetailOfHealthDisease;
+                    user.Medications = model.Medications;
+                    user.StrenghtOfMedication = model.StrenghtOfMedication;
+                    user.FrequencyTaken = model.FrequencyTaken;
+                    user.Salary = model.Salary;
+                    user.DeptId = model.DeptId;
+                    user.PolicyId = model.PolicyId;
+                    user.ClaimMoney = model.ClaimMoney;
+
+
+
+                    var result = await userManager.UpdateAsync(user);
+                    if (result.Succeeded)
+                    {
+                        TempData["success"] = "Details Updated Successfully";
+                        return RedirectToAction("Index", "Home");
+                        
+
+                    }
+
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(" ", error.Description);
+                    }
+
+                    return View(model);
+
+                }
             }
             else
             {
-                user.FirstName = model.FirstName;
-                user.LastName = model.LastName;
-                user.Age = model.Age;
-                user.Gender = model.Gender;
-                //user.DateOfBirth = model.DateOfBirth;
-                user.CNIC = model.CNIC;
-                user.TemporaryAddress = model.TemporaryAddress;
-                user.PermenantAddress = model.PermenantAddress;
-                user.Education = model.Education;
-                user.MaritalStatus = model.MaritalStatus;
-                user.PersonalPhoneNumber = model.PersonalPhoneNumber;
-                user.HomePhoneNumber = model.HomePhoneNumber;
-                user.EmergencyPhoneNumber = model.EmergencyPhoneNumber;
-                user.BloodGroup = model.BloodGroup;
-                user.Height = model.Height;
-                user.Weight = model.Weight;
-                user.DetailOfHealthDisease = model.DetailOfHealthDisease;
-                user.Medications = model.Medications;
-                user.StrenghtOfMedication = model.StrenghtOfMedication;
-                user.FrequencyTaken = model.FrequencyTaken;
-                user.Salary = model.Salary;
-                user.DeptId = model.DeptId;
-                user.PolicyId = model.PolicyId;
-                user.ClaimMoney = model.ClaimMoney;
-
-
-
-                var result = await userManager.UpdateAsync(user);
-                if (result.Succeeded)
-                {
-                    return RedirectToAction("Index","Home");
-                }
-
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(" ", error.Description);
-                }
-
+                TempData["error"] = "Some fields are required to be filled";
                 return View(model);
             }
 
-      
+            //if (user == null)
+            //{
+            //    return View("NotFound");
+            //}
+            //else
+            //{
+            //    user.FirstName = model.FirstName;
+            //    user.LastName = model.LastName;
+            //    user.Age = model.Age;
+            //    user.Gender = model.Gender;
+            //    //user.DateOfBirth = model.DateOfBirth;
+            //    user.CNIC = model.CNIC;
+            //    user.TemporaryAddress = model.TemporaryAddress;
+            //    user.PermenantAddress = model.PermenantAddress;
+            //    user.Education = model.Education;
+            //    user.MaritalStatus = model.MaritalStatus;
+            //    user.PersonalPhoneNumber = model.PersonalPhoneNumber;
+            //    user.HomePhoneNumber = model.HomePhoneNumber;
+            //    user.EmergencyPhoneNumber = model.EmergencyPhoneNumber;
+            //    user.BloodGroup = model.BloodGroup;
+            //    user.Height = model.Height;
+            //    user.Weight = model.Weight;
+            //    user.DetailOfHealthDisease = model.DetailOfHealthDisease;
+            //    user.Medications = model.Medications;
+            //    user.StrenghtOfMedication = model.StrenghtOfMedication;
+            //    user.FrequencyTaken = model.FrequencyTaken;
+            //    user.Salary = model.Salary;
+            //    user.DeptId = model.DeptId;
+            //    user.PolicyId = model.PolicyId;
+            //    user.ClaimMoney = model.ClaimMoney;
+
+
+
+            //    var result = await userManager.UpdateAsync(user);
+            //    if (result.Succeeded)
+            //    {
+            //        if (User.IsInRole("Employee"))
+            //        {
+            //            return RedirectToAction("ListPolicyUser", "PolicyRequest");
+            //        }
+            //        else
+            //        {
+            //            return RedirectToAction("Index", "Home");
+            //        }
+
+            //    }
+
+            //    foreach (var error in result.Errors)
+            //    {
+            //        ModelState.AddModelError(" ", error.Description);
+            //    }
+
+            //    return View(model);
+            //}
+
+
         }
 
 
@@ -164,6 +261,7 @@ namespace Health_Insuarance_Management_System_webapp.Controllers
                     return View();
                 }
                 await signInManager.RefreshSignInAsync(user);
+                TempData["success"] = "Password updated Successfully";
                 return RedirectToAction("Index","Home");
             }
             
@@ -171,6 +269,7 @@ namespace Health_Insuarance_Management_System_webapp.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles ="Admin")]
         public IActionResult Register()
         {
             ViewData["DepartmentId"] = new SelectList(context.Set<DepartmentModel>(), "DeptId", "DeptName");
@@ -179,12 +278,13 @@ namespace Health_Insuarance_Management_System_webapp.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Register(AccountRegisterViewModel model, IFormFile file)
         {
             var folder = "";
             if (file != null)
             {
-                folder = @"images\employees\";
+                folder = @"images/employees/";
                 folder += Guid.NewGuid().ToString() + "_" + file.FileName ;
                 var serverFolder = Path.Combine(webHost.WebRootPath, folder);
                
@@ -233,6 +333,7 @@ namespace Health_Insuarance_Management_System_webapp.Controllers
                 {
                     if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
                     {
+                        TempData["success"] = "User registered Successfully";
                         return RedirectToAction("ListUsers", "Administration");
                     }
                     await signInManager.SignInAsync(user, isPersistent: false);
@@ -250,7 +351,7 @@ namespace Health_Insuarance_Management_System_webapp.Controllers
         public async Task<IActionResult> LogOut()
         {
             await signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("LogIn", "Account");
         }
         [HttpGet]
         public IActionResult LogIn()
@@ -267,16 +368,21 @@ namespace Health_Insuarance_Management_System_webapp.Controllers
                     model.RememberMe, false
                     );
                 if (result.Succeeded)
-                {
-                    if (!string.IsNullOrEmpty(returnUrl))
-                    {
-                        return Redirect(returnUrl);
-                    }
+                {               
+                  if (User.IsInRole("Employee"))
+                  {
+                        return RedirectToAction("ListPolicyUser", "PolicyRequest");
+                  }
                     else
                     {
-                       return RedirectToAction("Index", "Home");
-
+                        return RedirectToAction("Index", "Home");
                     }
+                    
+                        
+                    
+                        
+                       
+
                 }
                 ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
 

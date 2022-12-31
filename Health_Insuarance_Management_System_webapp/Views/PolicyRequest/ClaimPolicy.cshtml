@@ -1,0 +1,68 @@
+﻿@model Health_Insuarance_Management_System_webapp.ViewModels.ClaimPolicyViewModel
+@{
+    ViewData["Title"] = "Claim Your Insurance Policy";
+    Layout = "~/Views/Shared/_Layout3.cshtml";
+}
+
+
+
+
+
+<form asp-action="ClaimPolicy" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="border p-3 mt-4 row">
+
+        <div class="mb-3 col-6">
+            <label asp-for="PolicyId" class="control-label"></label>
+            <select asp-for="PolicyId" disabled class="form-control" asp-items="ViewBag.PolicyId"></select>
+            <select asp-for="PolicyId" hidden class="form-control" asp-items="ViewBag.PolicyId"></select>
+        </div>
+        <div class="mb-3 col-6">
+            <label asp-for="CompId" class="control-label"></label>
+            <select asp-for="CompId" disabled class="form-control" asp-items="ViewBag.CompanyId"></select>
+            <select asp-for="CompId" hidden class="form-control" asp-items="ViewBag.CompanyId"></select>
+        </div>
+        <div class="col-5">
+            <label asp-for="UserId"></label>
+            <input asp-for="UserId" disabled class="form-control p-2" />
+            <input asp-for="UserId" hidden class="form-control" />
+           
+        </div>
+        <div class="col-5">
+            <label asp-for="FnameLname"></label>
+            <input asp-for="FnameLname" disabled class="form-control p-2" />
+            <input asp-for="FnameLname" hidden class="form-control" />
+
+        </div>
+
+
+
+        <div class="mb-3 col-6 ">
+            <label asp-for="Photo"></label>
+           @* <input asp-for="Photo" class="form-control" />*@
+            <input id="inpBox" asp-for="Photo" name="file" class="form-control" />
+        </div>
+
+
+        <div class="mb-3 col-6">
+            <label asp-for="ClaimAmount"></label>
+            <input asp-for="ClaimAmount" class="form-control" />
+            <span asp-validation-for="ClaimAmount" class="text-danger"></span>
+        </div>
+        <div class="mb-3 col-12">
+            <label asp-for="UserReason"></label>
+            <textarea asp-for="UserReason" class="form-control" rows="5"> </textarea>
+            <span asp-validation-for="UserReason" class="text-danger"></span>
+        </div>
+
+
+    
+
+
+
+        <input type="submit" value="Request Claim" class="btn btn-primary" />
+        <a asp-action="Index" asp-controller="Home" class="btn btn-secondary mt-2">Cancel</a>
+
+
+    </div>
+</form>

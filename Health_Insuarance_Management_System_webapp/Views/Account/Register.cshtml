@@ -1,18 +1,15 @@
 ﻿@using Health_Insuarance_Management_System_webapp.Enums;
 @model Health_Insuarance_Management_System_webapp.ViewModels.AccountRegisterViewModel
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "Register User";
+    Layout = "~/Views/Shared/_Layout3.cshtml";
 }
 
-<h1>Register User</h1>
+
 
 <form  asp-action="Register" method="post" enctype="multipart/form-data">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <div class="border p-3 mt-4 row">
-         @*<div class="row pb-2">
-            <h2 class="text-primary">Register User</h2>
-            <hr />
-        </div>*@
+    <div class="border p-3 row">
 
          <div class="col-6">
             <label asp-for="Email"></label>
@@ -162,20 +159,30 @@
 
  
 
-        <input type="submit" value="Create" class="btn btn-primary" />
+        <input type="submit" value="Create" onclick="return ValidateInput()" class="btn btn-primary col-12" />
+        <a asp-action="Index" asp-controller="Home" class="btn btn-secondary col-12 mt-2">Cancel</a>
 
-       @* <div class="col-6">
-            @if (Model.Product.Id != 0)
-            {
-                <button type="submit" class="btn btn-primary" style="width:150px">Update</button>
-
-            }
-            else
-            {
-                <button type="submit" onclick="return ValidateInput()" class="btn btn-primary" style="width:150px">Create</button>
-
-            }
-            <a asp-controller="Product" asp-action="Index" class="btn btn-secondary">Back To List</a>
-        </div>*@
     </div>
 </form>
+
+@section Scripts{
+   
+        <script>
+
+            function ValidateInput(){
+                if (document.getElementById("inpBox").value == "")
+                {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Please upload an Image!',
+                    });
+                    return false
+               }
+               return true;
+            }
+            
+            
+        </script>
+    
+}

@@ -1,0 +1,41 @@
+﻿@model List<Health_Insuarance_Management_System_webapp.Models.InsuranceCompanyModel>
+@{
+    ViewData["Title"] = "Insurance Companies";
+    Layout = "~/Views/Shared/_Layout3.cshtml";
+}
+
+
+
+<div class="container">
+    
+    <div class="row">
+        @{
+            if (Model.Any())
+            {
+                
+           
+            foreach (var item in Model)
+            {
+                <div class="card mx-4 mt-2" style="width: 18rem;">
+                    <img src="~/@item.PhotoPath" class="card-img-top" alt="image">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.InsuranceCompanyName</h5>
+                        <p class="card-text">@item.ExtraInformation</p>
+                        <a asp-action="EditCompany" asp-route-id="@item.CompanyId" asp-controller="InsuranceCompany" class="btn btn-primary">Edit</a>
+                        <a asp-action="DeleteCompany" asp-route-id="@item.CompanyId" asp-controller="InsuranceCompany" class="btn btn-danger">Delete</a>
+                    </div>
+                </div>
+            }
+             }else
+            {
+                <div class="col-9"> 
+                <h4 class="mt-4">Sorry No Companies available you can create new Companies by Clicking the button below.</h4>
+                <a asp-action="Create" asp-controller="InsuranceCompany" class="btn btn-primary">Create</a>
+                </div>
+            }
+
+        }
+    </div>
+
+</div>
+

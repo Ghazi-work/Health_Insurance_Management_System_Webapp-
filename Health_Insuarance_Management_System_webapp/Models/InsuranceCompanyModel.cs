@@ -6,6 +6,7 @@ namespace Health_Insuarance_Management_System_webapp.Models
     {
         [Key]
         public int CompanyId { get; set; }
+        public string PhotoPath { get; set; }
         public string InsuranceCompanyName { get; set; }
         public string HeadOfficeAddress { get; set; }
         public string HelplineNumber { get; set;}
